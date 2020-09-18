@@ -1,10 +1,10 @@
         <div class = "footer">
-            this is footer
+            
 
         </div>
-        <script src="layout/js/jquery.js"></script>
-        <script src="layout/js/bootstrap.min.js"></script>
-        <script src="layout/js/backend.js"></script>
+        <script src= '<?php echo $jsAdmin ."jquery.js" ?>'></script>
+        <script src= '<?php echo $jsAdmin . "bootstrap.min.js"?>'></script>
+        <script src= '<?php echo $jsAdmin ."backend.js"?>'></script>
         
     </body>
 </html>

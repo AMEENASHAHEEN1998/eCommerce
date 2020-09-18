@@ -1,0 +1,24 @@
+/* start main rule*/
+body{
+    background-color: #f4f4f4;
+}
+/* end main rule*/
+
+/* start login index.php style */
+.login{
+    width: 300px;
+    margin: 150px auto;
+}
+.login h4{
+    color: #888;
+}
+.login input{
+    margin-bottom: 10px;
+}
+.login .form-control{
+    background-color: #eaeaea;
+}
+.login .btn{
+    background-color: #008dde;
+}
+/* end login index.php style */
