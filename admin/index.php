@@ -1,11 +1,11 @@
 <?php
     session_start();
+    $noNavbar ='';
     if(isset($_SESSION['UserName'])){
         header('location:dashpored.php');
     }
     include 'init.php'; // include init file
-    include $tpl . 'Header.php'; // include header file
-    include $languages . 'english.php'; // include english language file
+    
 
     //check if user come from http request
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -38,4 +38,4 @@
 
 <?php
     include $tpl . 'Footer.php';
-?>
+    ?>

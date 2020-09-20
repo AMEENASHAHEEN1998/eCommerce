@@ -1,0 +1,46 @@
+<nav  class="navbar navbar-inverse navbar-expand-sm bg-dark navbar-dark" >
+  <div class="container" >
+    <div class="navbar-header" >
+      
+      <a class="navbar-brand" href="#"><?php echo lang('AdminArea')?></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#app-nav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="app-nav" >
+      
+      <ul class="navbar-nav">
+        <li class="nav-item ">
+          <a class="nav-link " href="#"><?php echo lang('Categories')?></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="#"><?php echo lang('Items')?></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="#"><?php echo lang('Members')?></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  " href="#"><?php echo lang('Statistic')?></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  " href="#"><?php echo lang('Logs')?></a>
+        </li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right hoverNav " style="margin-left : 50%" >   
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" style="color:#fff" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo lang('userName')?> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Edit Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+            
+          </ul>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+

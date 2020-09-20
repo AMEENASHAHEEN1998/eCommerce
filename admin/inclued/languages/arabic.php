@@ -3,8 +3,9 @@
 function lang($phrase){
 
     static $lang = array(
-        'Message' => 'مرحبا',
-        'Admin'   => 'أدمن'
+        'AdminArea' => 'منطقة الأدمن',
+        'Categories'   => 'المواصفات',
+        'userName' =>'أمينة'
     );
 
     return $lang[$phrase];
