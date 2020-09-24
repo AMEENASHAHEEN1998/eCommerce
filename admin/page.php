@@ -18,6 +18,9 @@ if($do == "Manage"){
     echo 'welcome in do Insert page';
 }elseif($do == 'Delete'){
     echo 'welcome in do Delete page';
+}elseif($do == 'Edit'){
+    echo 'welcome in do Edit page';
 }else{
     echo "error";
+
 }

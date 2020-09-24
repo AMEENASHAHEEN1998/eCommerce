@@ -24,7 +24,7 @@ body{
 }
 /* end login index.php style */
 
-
+/* start nav bar*/
 .dropdown-menu,ul>li:hover{
     background-color: #3498db;
     color : #fff;
@@ -56,4 +56,13 @@ ul>li>a {
     color :#fff;
     
 }
+/* end nav bar*/
 
+/* start member page */
+h2{
+    font-size: 55px;
+    margin :20px 0;
+    font-weight: bold;
+    color: #666;
+}
+/* end member page */

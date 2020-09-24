@@ -1,6 +1,7 @@
 <?php
     session_start();
     $noNavbar ='';
+    $pageTitle = 'Login';
     if(isset($_SESSION['UserName'])){
         header('location:dashpored.php');
     }
@@ -15,14 +16,16 @@
         
 
         // check if user exist in database
-        $stmt = $con->prepare("SELECT UserName,Password FROM shop.users WHERE UserName = ? AND Password = ? AND GroupId = 1");
+        $stmt = $con->prepare("SELECT UserId, UserName,Password FROM shop.users WHERE UserName = ? AND Password = ? AND GroupId = 1 LIMIT 1");
         $stmt->execute(array($username,$hashedPass));
+        $row = $stmt->fetch(); 
         $count = $stmt->rowCount();
         
         // if count > 0 this mean that connect to database correct
         if($count > 0){
-            $_SESSION['UserName'] = $username;
-            header('location:dashpored.php');
+            $_SESSION['UserName'] = $username; // register session name
+            $_SESSION['ID']   = $row['UserId']; // register session id
+            header('location:dashpored.php'); // transfer to dashpored page
             exit();
         }
     }
