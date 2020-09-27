@@ -20,7 +20,9 @@ if($do == "Manage"){
     echo 'welcome in do Delete page';
 }elseif($do == 'Edit'){
     echo 'welcome in do Edit page';
-}else{
+}elseif($do == 'Update'){
+        echo 'welcome in do Update page';}
+else{
     echo "error";
 
 }

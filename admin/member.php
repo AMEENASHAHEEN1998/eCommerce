@@ -1,13 +1,14 @@
 <?php
-/* member page can add | delete | edit */
+/* member page can add | delete | edit | update */
     session_start();
     if(isset($_SESSION['UserName'])){
         $pageTitle ='Member';
         include 'init.php';
         $do =isset($_GET['do']) ?$do=$_GET['do']:$do = 'Manage';
         if($do == "Manage"){
-
-        }elseif($do == 'Edit'){
+            echo "welcome from manage page in member";
+        }
+        elseif($do == 'Edit'){
             // check if GET request user id is number and get userid value
             $userid = isset($_GET['userid']) && is_numeric($_GET['userid'])? intval($_GET['userid']): 0 ;
            // select all data depends in this id 
@@ -23,7 +24,8 @@
 
                 <h2 class=" text-center"  >Edit Member</h2>
                 <div class ='container'>
-                    <form class='form-horizontal '>
+                    <form class='form-horizontal ' action = '?$do=Update' method = 'POST'>
+                        <input type = 'hidden' value = '<?php echo $userid ?>' name = 'userid'>
                     <!-- Start username filed-->
                         <div class ="row form-group form-group-lg">
                             <label class="control-lable col-sm-2 " >User Name</label>
@@ -37,7 +39,8 @@
                         <div class ='row form-group'>
                             <label class='control-lable col-sm-2' >Password</label>
                             <div class = 'col-sm-10 col-md-4'>
-                                <input type="password" name='password' class='form-control' autocomplete = 'new-password'>
+                                <input type="hidden" name='oldPassword' value = "<?php echo $row['Password'] ?>">
+                                <input type="password" name='newPassword' class='form-control' autocomplete = 'new-password'>
                             </div>
                         </div>
                     <!-- End Password filed-->
@@ -71,6 +74,34 @@
             // else show if ther is no such id in db
             }else {
                 echo "there is no id equiavilant " . $userid;
+            }
+        
+        }elseif($do == 'Update'){
+            echo "<h2 class='text-center'>Update Member</h2> ";
+        
+            if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // نفس الاسم الي في التاغ زي اتربيوت النيم
+                $username = $_POST['username'];
+                $userid = $_POST['userid'];
+                $email = $_POST['email'];
+                $fullname = $_POST['fullname'];
+
+                // password trick 
+
+                $pass ='';
+                if (empty($_POST['newPassword'])){
+                    $pass = $_POST['oldPassword'];
+                }else{
+                    $pass = sha1($_POST['newPassword']);
+                }
+
+                //echo $username . $userid . $email . $fullname;
+
+                $stmt = $con-> prepare("UPDATE shop.users SET UserName = ? , Email = ? , FullName = ?,Password = ? WHERE UserId = ?");
+                $stmt->execute(array($username ,$email ,$fullname ,$pass ,$userid ));
+                echo $stmt->rowCount() . "Recored updated";
+            }else {
+                echo "Sorry you can not access this browser directly";
             }
         }
         include $tpl . 'Footer.php';
