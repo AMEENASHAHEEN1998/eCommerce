@@ -65,4 +65,14 @@ h2{
     font-weight: bold;
     color: #666;
 }
+.asterisk{
+    font-size: 30px;
+    position: absolute;
+    top: 8px;
+    right: 30px;
+    color: #D20707;
+}
+.form-control{
+    padding: relative;
+}
 /* end member page */

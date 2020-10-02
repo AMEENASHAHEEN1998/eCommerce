@@ -9,7 +9,17 @@ function lang($phrase){
         'Items' =>'Items',
         'Members'=>'Members',
         'Statistic'=>'Statistic',
-        'Logs'=>'Logs'
+        'Logs'=>'Logs',
+        'EditProfile'=>'Edit Profile',
+        'Settings'=>'Settings',
+        'Logout'=>'Logout',
+        // member page
+        'EditMember'=>'Edit Member',
+        'UserName'=>'User Name',
+        'Password'=>'Password',
+        'Email'=>'Email',
+        'FullName'=>'Full Name',
+        'Save'=>'Save'
     );
 
     return $lang[$phrase];
