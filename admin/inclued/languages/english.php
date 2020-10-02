@@ -20,7 +20,8 @@ function lang($phrase){
         'Email'=>'Email',
         'FullName'=>'Full Name',
         'Save'=>'Save',
-        'AddMember'=>'Add New Member'
+        'AddMember'=>'Add New Member',
+        'btnAddMember'=>'Add Member'
     );
 
     return $lang[$phrase];

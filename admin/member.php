@@ -13,12 +13,11 @@
             <h2 class=" text-center"  ><?php echo lang('AddMember')?></h2>
             <div class ='container'>
                 <form class='form-horizontal ' action = '?do=Insert' method = 'POST'>
-                    <input type = 'hidden' value = '<?php echo $userid ?>' name = 'userid'>
                 <!-- Start username filed-->
                     <div class ="row form-group form-group-lg">
                         <label class="control-lable col-sm-2 " ><?php echo lang('UserName')?></label>
-                        <div class = "col-sm-10 col-md-4">
-                            <input type="text" name="username" class="form-control" value = "<?php echo $row['UserName'] ?>" required = "required" autocomplete = 'off'>
+                        <div class = "col-sm-10 col-md-5">
+                            <input type="text" name="username" class="form-control"  required = "required" placeholder = "Enter username to login into shop " autocomplete = 'off'>
                         </div>
                     </div>
                 <!-- End username filed-->
@@ -26,32 +25,34 @@
                 <!-- Start Password filed-->
                     <div class ='row form-group'>
                         <label class='control-lable col-sm-2' ><?php echo lang('Password')?></label>
-                        <div class = 'col-sm-10 col-md-4'>
-                            <input type="hidden" name='oldPassword' value = "<?php echo $row['Password'] ?>">
-                            <input type="password" name='newPassword' class='form-control' autocomplete = 'new-password' placeholder = "Leave Blank if you do not need change">
+                        <div class = 'col-sm-10 col-md-5'>
+                            <input type="password" name='password' class='password form-control' autocomplete = 'new-password' required = "required" placeholder = "Password must be hard and complete">
+                            <i class = "show-pass fa fa-eye fa-2x"></i>
+                            
+
                         </div>
                     </div>
                 <!-- End Password filed-->
                 <!-- Start email filed-->
                     <div class ='row form-group'>
                         <label class='control-lable col-sm-2' ><?php echo lang('Email')?></label>
-                        <div class = 'col-sm-10 col-md-4'>
-                            <input type="email" name='email' value = "<?php echo $row['Email'] ?>" class='form-control' required = "required">
+                        <div class = 'col-sm-10 col-md-5'>
+                            <input type="email" name='email'  class='form-control' required = "required" placeholder = "Enter real email">
                         </div>
                     </div>
                 <!-- End email filed-->
                 <!-- Start Full Name filed-->
                     <div class ='row form-group '>
                         <label class=' col-sm-2 control-lable' ><?php echo lang('FullName')?></label>
-                        <div class = 'col-sm-10 col-md-4'>
-                            <input type="text" name='fullname' value = "<?php echo $row['FullName'] ?>" class='form-control' required = "required">
+                        <div class = 'col-sm-10 col-md-5'>
+                            <input type="text" name='fullname'  class='form-control' required = "required" placeholder = "Enter full name to appear in your profile ">
                         </div>
                     </div>
                 <!-- End Full Name filed-->
                 <!-- Start save filed-->
                     <div class ='row form-group text-center'>
                         <div class = 'col-sm-offset-2 col-lg-offset-2 col-sm-10'>
-                            <input type="submit" value='<?php echo lang('Save')?>' class='btn btn-primary '>
+                            <input type="submit" value='<?php echo lang('btnAddMember')?>' class='btn btn-primary '>
                         </div>
                     </div>
                 <!-- End save filed-->
@@ -60,6 +61,64 @@
             </div> 
         <?php
                 
+            
+        }elseif($do == 'Insert'){
+            
+        
+            if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+                echo "<h2 class='text-center'>Insert Member</h2> ";
+                echo "<div class = 'container' >" ;
+                // نفس الاسم الي في التاغ زي اتربيوت النيم
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $fullname = $_POST['fullname'];
+                $pass = $_POST['password'];
+                $hashPass = sha1($_POST['password']);
+
+                // validation for input
+
+                $formErrors = array();
+                if(strlen($username) < 4){
+                    $formErrors[] = " User Name can not be <strong> less than 4 </strong> ";
+                }
+                if(strlen($username) > 20){
+                    $formErrors[] = " User Name can not be <strong>more than 20</strong> ";
+                }
+                if(empty($username)){
+                    $formErrors[] = "User Name is <strong>empty</strong> ";
+                }
+                if(empty($fullname)){
+                    $formErrors[] = " Full Name is <strong>empty</strong> ";
+                }
+                if(empty($pass)){
+                    $formErrors[] = " Password is <strong>empty</strong> ";
+                }
+                if(empty($email)){
+                    $formErrors[] = " User email is <strong>empty</strong> ";
+                }
+
+                foreach($formErrors as $error){
+                    echo "<div class = 'alert alert-danger'>" .$error."</div>" ;
+                }
+
+                // check if is there no error in update process
+                if(empty($formErrors)){
+                    
+                    $stmt = $con->prepare("INSERT INTO shop.users(UserName ,Password , Email , FullName)
+                    value (:zuser,:zpass,:zemail ,:zname)");
+                    $stmt->execute(array(
+                        'zuser'     => $username,
+                        'zpass'     => $hashPass,
+                        'zemail'    => $email,
+                        'zname'     => $fullname
+                    ));
+                    echo'<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Insered".'</div>';
+                }
+                
+            }else {
+                echo "Sorry you can not access this browser directly";
+            }
+            echo "</div>";
             
         }
         elseif($do == 'Edit'){
@@ -83,7 +142,7 @@
                     <!-- Start username filed-->
                         <div class ="row form-group form-group-lg">
                             <label class="control-lable col-sm-2 " ><?php echo lang('UserName')?></label>
-                            <div class = "col-sm-10 col-md-4">
+                            <div class = "col-sm-10 col-md-5">
                                 <input type="text" name="username" class="form-control" value = "<?php echo $row['UserName'] ?>" required = "required" autocomplete = 'off'>
                             </div>
                         </div>
@@ -92,7 +151,7 @@
                     <!-- Start Password filed-->
                         <div class ='row form-group'>
                             <label class='control-lable col-sm-2' ><?php echo lang('Password')?></label>
-                            <div class = 'col-sm-10 col-md-4'>
+                            <div class = 'col-sm-10 col-md-5'>
                                 <input type="hidden" name='oldPassword' value = "<?php echo $row['Password'] ?>">
                                 <input type="password" name='newPassword' class='form-control' autocomplete = 'new-password' placeholder = "Leave Blank if you do not need change">
                             </div>
@@ -101,7 +160,7 @@
                     <!-- Start email filed-->
                         <div class ='row form-group'>
                             <label class='control-lable col-sm-2' ><?php echo lang('Email')?></label>
-                            <div class = 'col-sm-10 col-md-4'>
+                            <div class = 'col-sm-10 col-md-5'>
                                 <input type="email" name='email' value = "<?php echo $row['Email'] ?>" class='form-control' required = "required">
                             </div>
                         </div>
@@ -109,7 +168,7 @@
                     <!-- Start Full Name filed-->
                         <div class ='row form-group '>
                             <label class=' col-sm-2 control-lable' ><?php echo lang('FullName')?></label>
-                            <div class = 'col-sm-10 col-md-4'>
+                            <div class = 'col-sm-10 col-md-5'>
                                 <input type="text" name='fullname' value = "<?php echo $row['FullName'] ?>" class='form-control' required = "required">
                             </div>
                         </div>
