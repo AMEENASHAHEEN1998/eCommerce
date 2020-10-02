@@ -21,7 +21,8 @@ function lang($phrase){
         'FullName'=>'Full Name',
         'Save'=>'Save',
         'AddMember'=>'Add New Member',
-        'btnAddMember'=>'Add Member'
+        'btnAddMember'=>'Add Member',
+        'ManageMembers'=>'Manage Members'
     );
 
     return $lang[$phrase];

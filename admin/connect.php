@@ -1,6 +1,6 @@
 <?php
 
-$dsn    = "mysql:host=localhost;dbname = shop"; // data soures name ,host name ,database name
+$dsn    = "mysql:host=localhost;dbname = shops"; // data soures name ,host name ,database name
 $user   = 'root'; 
 $pass   ='';
 $option = array(
