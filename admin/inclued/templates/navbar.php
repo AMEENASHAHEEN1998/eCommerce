@@ -18,7 +18,7 @@
           <a class="nav-link " href="#"><?php echo lang('Items')?></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#"><?php echo lang('Members')?></a>
+          <a class="nav-link " href="member.php"><?php echo lang('Members')?></a>
         </li>
         <li class="nav-item">
           <a class="nav-link  " href="#"><?php echo lang('Statistic')?></a>

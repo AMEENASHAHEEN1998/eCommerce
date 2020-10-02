@@ -19,7 +19,8 @@ function lang($phrase){
         'Password'=>'Password',
         'Email'=>'Email',
         'FullName'=>'Full Name',
-        'Save'=>'Save'
+        'Save'=>'Save',
+        'AddMember'=>'Add New Member'
     );
 
     return $lang[$phrase];
