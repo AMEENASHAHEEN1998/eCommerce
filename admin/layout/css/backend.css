@@ -80,8 +80,21 @@ h2{
     top: 5px;
     right: -30px;
 }
+.main-table{
+    -webkit-box-shadow: 0 3px 10px #ccc;
+    -moz-box-shadow:0 3px 10px #ccc;
+    box-shadow: 0 3px 10px #ccc;
+}
+.main-table td{
+    background-color: #fff;
+    vertical-align: middle !important;
+}
+
 .main-table tr:first-child td{
     background-color: #333;
     color: #fff;
+}
+.btnPadd {
+    padding: 3px 10px;
 }
 /* end member page */

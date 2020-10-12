@@ -24,4 +24,10 @@ $( document ).ready(function() {
         $('.password').attr("type" , "password");
     });
 
+    // confirmation button when delete
+
+    $('.confirm').click(function(){
+        return confirm("Are you sure ?");
+    });
+
 });

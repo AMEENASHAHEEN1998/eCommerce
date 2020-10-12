@@ -33,8 +33,8 @@
                                     echo "<td>" . $row['FullName'] . "</td>";
                                     echo "<td></td>";
                                     echo "<td>
-                                                <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success'>Edit</a>
-                                                <a href='' class='btn btn-danger'>Delete</a>
+                                                <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i>Edit</a>
+                                                <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='far fa-window-close'></i>Delete</a>
                                           </td>";
                                     
                                 echo "</tr>";
@@ -44,7 +44,7 @@
                         
                     </table>
                 </div>
-            <a href = "member.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> Add New Member</a>
+            <a href = "member.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Member</a>
             </div>
             
             <?php
@@ -157,7 +157,8 @@
                 }
                 
             }else {
-                echo "Sorry you can not access this browser directly";
+                $errorMsg = "Sorry you can not access this browser directly";
+                redirectPage($errorMsg , 6);
             }
             echo "</div>";
             
@@ -286,6 +287,31 @@
             }
             echo "</div>";
             
+        }
+        elseif($do == 'Delete'){ // delete page member
+
+            echo "<h2 class='text-center'>Delete Member</h2> ";
+            echo "<div class = 'container' >" ;
+
+                // check if GET request user id is number and get userid value
+                $userid = isset($_GET['userid']) && is_numeric($_GET['userid'])? intval($_GET['userid']): 0 ;
+                // select all data depends in this id 
+                $stmt = $con->prepare("SELECT * FROM shops.users WHERE UserId = ?  LIMIT 1");
+                //ececute query
+                $stmt->execute(array($userid));
+                // the row count 
+                $count = $stmt->rowCount();
+                // if there is such id show the form 
+                if($count > 0){
+                    $stmt = $con->prepare("DELETE FROM shops.users WHERE UserId = :zuserid ");
+                    $stmt->bindParam(":zuserid" , $userid);
+                    $stmt->execute();
+                    echo'<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Deleted".'</div>';
+                    
+                }else{ 
+                    echo "id number is not exist";
+                }
+            echo'</div>';  
         }
         include $tpl . 'Footer.php';
 

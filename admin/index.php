@@ -16,7 +16,7 @@
         
 
         // check if user exist in database
-        $stmt = $con->prepare("SELECT UserId, UserName,Password FROM shop.users WHERE UserName = ? AND Password = ? AND GroupId = 1 LIMIT 1");
+        $stmt = $con->prepare("SELECT UserId, UserName,Password FROM shops.users WHERE UserName = ? AND Password = ? AND GroupId = 1 LIMIT 1");
         $stmt->execute(array($username,$hashedPass));
         $row = $stmt->fetch(); 
         $count = $stmt->rowCount();
