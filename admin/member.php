@@ -1,5 +1,8 @@
 <?php
-/* member page can add | delete | edit | update */
+/*
+** member page
+** can add | delete | edit | update | manage
+*/
     session_start();
     if(isset($_SESSION['UserName'])){
         $pageTitle ='Member';
@@ -31,7 +34,7 @@
                                     echo "<td>" . $row['UserName'] . "</td>";
                                     echo "<td>" . $row['Email'] . "</td>";
                                     echo "<td>" . $row['FullName'] . "</td>";
-                                    echo "<td></td>";
+                                    echo "<td>" . $row['Date'] ."</td>";
                                     echo "<td>
                                                 <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i>Edit</a>
                                                 <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='far fa-window-close'></i>Delete</a>
@@ -144,21 +147,32 @@
 
                 // check if is there no error in update process
                 if(empty($formErrors)){
+
+                    $check = checkItem("UserName","shops.users",$username);
+                    if($check == 1){
+                        $Msg = "<div class = 'alert alert-danger'>Sorry this user name is exist</div>";
+                        redirectPage($Msg,'back' , 5);
+                    }else{
+                        // insert into db
+                        $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email , FullName,Date)
+                        value (:zuser,:zpass,:zemail ,:zname , now())");
+                        $stmt->execute(array(
+                            'zuser'     => $username,
+                            'zpass'     => $hashPass,
+                            'zemail'    => $email,
+                            'zname'     => $fullname
+                        ));
+                        $Msg = '<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Insered".'</div>';
+                        redirectPage($Msg,'back' , 5);
                     
-                    $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email , FullName)
-                    value (:zuser,:zpass,:zemail ,:zname)");
-                    $stmt->execute(array(
-                        'zuser'     => $username,
-                        'zpass'     => $hashPass,
-                        'zemail'    => $email,
-                        'zname'     => $fullname
-                    ));
-                    echo'<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Insered".'</div>';
+                    }
                 }
                 
             }else {
-                $errorMsg = "Sorry you can not access this browser directly";
-                redirectPage($errorMsg , 6);
+                echo '<div class = "container">';
+                    $Msg = "<div class ='alert alert-danger' >Sorry you can not access this browser directly</div>";
+                    redirectPage($Msg,'back' , 5);
+                echo '</div>';
             }
             echo "</div>";
             
@@ -228,7 +242,10 @@
             <?php
             // else show if ther is no such id in db
             }else {
-                echo "there is no id equiavilant " . $userid;
+                echo '<div class = "container">';
+                    $Msg = "<div class ='alert alert-danger' >there is no id equiavilant " . $userid .'</div>';
+                    redirectPage($Msg);
+                echo '</div>';
             }
         
         }elseif($do == 'Update'){
@@ -279,11 +296,17 @@
 
                     $stmt = $con-> prepare("UPDATE shops.users SET UserName = ? , Email = ? , FullName = ?,Password = ? WHERE UserId = ?");
                     $stmt->execute(array($username ,$email ,$fullname ,$pass ,$userid ));
-                    echo'<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
+
+                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
+                    redirectPage($Msg,'back' , 5);
+                   // redirectPage($Msg,'member.php' , 5);
+                
                 }
                 
             }else {
-                echo "Sorry you can not access this browser directly";
+                $Msg = "<div class = 'alert alert-danger'>Sorry you can not access this browser directly</div>";
+                redirectPage($Msg);
+                
             }
             echo "</div>";
             
@@ -296,20 +319,29 @@
                 // check if GET request user id is number and get userid value
                 $userid = isset($_GET['userid']) && is_numeric($_GET['userid'])? intval($_GET['userid']): 0 ;
                 // select all data depends in this id 
-                $stmt = $con->prepare("SELECT * FROM shops.users WHERE UserId = ?  LIMIT 1");
-                //ececute query
-                $stmt->execute(array($userid));
-                // the row count 
-                $count = $stmt->rowCount();
+                /*
+                use itemfunction insted of next line
+                    $stmt = $con->prepare("SELECT * FROM shops.users WHERE UserId = ?  LIMIT 1");
+                    //ececute query
+                    $stmt->execute(array($userid));
+                    // the row count 
+                    $count = $stmt->rowCount();
+                */
+                $check = checkItem('UserId','shops.users',$userid);
                 // if there is such id show the form 
-                if($count > 0){
+                if($check > 0){
                     $stmt = $con->prepare("DELETE FROM shops.users WHERE UserId = :zuserid ");
                     $stmt->bindParam(":zuserid" , $userid);
                     $stmt->execute();
-                    echo'<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Deleted".'</div>';
+                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Deleted".'</div>';
+                    redirectPage($Msg,'back' , 5);
                     
-                }else{ 
-                    echo "id number is not exist";
+                }else{
+                    echo '<div class = "container">'; 
+                        $Msg = "id number is not exist";
+                        redirectPage($Msg);
+                    echo '</div>';
+
                 }
             echo'</div>';  
         }
