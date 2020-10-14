@@ -54,3 +54,17 @@ function checkItem($select,$from,$value){
     return $count;
 
 }
+
+/*
+** check number of item function version v1.0
+** function to count number of item row
+** $item = The item to count
+** $table = The table to choose from
+*/
+
+function countItem($item ,$table){
+    global $con;
+    $stmt = $con->prepare("SELECT count($item) FROM $table");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}

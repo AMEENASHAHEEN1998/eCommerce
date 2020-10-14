@@ -12,7 +12,12 @@
                 <div class = "col-md-3">
                     <div class = "stat">
                         Total Member
-                        <span>100</span>
+                        <span><?php countItem('UserId' ,'shops.users') ?></span>
+                        <!--<span><?php $stmt = $con->prepare("SELECT count('UserId') FROM shops.users");
+                                    $stmt->execute();
+                                    ECHO $stmt->fetchColumn(); ?>
+                        </span>-->
+                        
                     </div>
                 </div>
                 <div class = "col-md-3">
