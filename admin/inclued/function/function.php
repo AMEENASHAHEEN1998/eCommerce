@@ -68,3 +68,19 @@ function countItem($item ,$table){
     $stmt->execute();
     return $stmt->fetchColumn();
 }
+
+/*
+** get latest record function v1.0 
+** function to get latest item from database [users ,items ,..]
+** $select = filed to select
+** $table = table name 
+** $limit = number of limit to fetch
+*/
+
+function getLatest($select ,$table ,$order ,$limit = 5){
+    global $con ;
+    $stmt = $con->prepare("SELECT $select FROM $table ORDER BY $order DESC LIMIT $limit");
+    $stmt->execute();
+    $rows = $stmt->fetchAll();
+    return $rows;
+}

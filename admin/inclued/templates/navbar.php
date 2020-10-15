@@ -2,7 +2,7 @@
   <div class="container" >
     <div class="navbar-header" >
       
-      <a class="navbar-brand" href="#"><?php echo lang('AdminArea')?></a>
+      <a class="navbar-brand" href="dashpored.php"><?php echo lang('AdminArea')?></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#app-nav">
     <span class="navbar-toggler-icon"></span>
   </button>

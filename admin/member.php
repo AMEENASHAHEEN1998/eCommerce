@@ -9,9 +9,14 @@
         include 'init.php';
         $do =isset($_GET['do']) ?$do=$_GET['do']:$do = 'Manage';
         if($do == "Manage"){
+
+            $query = '';
+            if(isset($_GET['page']) && $_GET['page'] == 'Pending'){
+                $query = 'AND RegStatus = 0';
+            }
             
             // select all user in db without admin
-            $stmt = $con->prepare("SELECT * from shops.users where GroupId != 1");
+            $stmt = $con->prepare("SELECT * from shops.users where GroupId != 1 $query");
             $stmt->execute();
             $rows = $stmt->fetchAll();
             ?>
@@ -37,8 +42,11 @@
                                     echo "<td>" . $row['Date'] ."</td>";
                                     echo "<td>
                                                 <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i>Edit</a>
-                                                <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='far fa-window-close'></i>Delete</a>
-                                          </td>";
+                                                <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='far fa-window-close'></i>Delete</a>";
+                                                if($row['RegStatus'] == 0){
+                                                echo "<a href='member.php?do=Active&userid=". $row['UserId'] ." ' class='btn btn-info btnPadd active'><i class='far fa-window-close'></i>Active</a>";
+                                                }
+                                                echo"</td>";
                                     
                                 echo "</tr>";
 
@@ -154,8 +162,8 @@
                         redirectPage($Msg,'back' , 5);
                     }else{
                         // insert into db
-                        $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email , FullName,Date)
-                        value (:zuser,:zpass,:zemail ,:zname , now())");
+                        $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email , FullName,RegStatus,Date)
+                        value (:zuser,:zpass,:zemail ,:zname ,1 , now())");
                         $stmt->execute(array(
                             'zuser'     => $username,
                             'zpass'     => $hashPass,
@@ -334,6 +342,39 @@
                     $stmt->bindParam(":zuserid" , $userid);
                     $stmt->execute();
                     $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Deleted".'</div>';
+                    redirectPage($Msg,'back' , 5);
+                    
+                }else{
+                    echo '<div class = "container">'; 
+                        $Msg = "id number is not exist";
+                        redirectPage($Msg);
+                    echo '</div>';
+
+                }
+            echo'</div>';  
+        }elseif($do == 'Active'){ // Active page member
+
+            echo "<h2 class='text-center'>Active Member</h2> ";
+            echo "<div class = 'container' >" ;
+
+                // check if GET request user id is number and get userid value
+                $userid = isset($_GET['userid']) && is_numeric($_GET['userid'])? intval($_GET['userid']): 0 ;
+                // select all data depends in this id 
+                /*
+                use itemfunction insted of next line
+                    $stmt = $con->prepare("SELECT * FROM shops.users WHERE UserId = ?  LIMIT 1");
+                    //ececute query
+                    $stmt->execute(array($userid));
+                    // the row count 
+                    $count = $stmt->rowCount();
+                */
+                $check = checkItem('UserId','shops.users',$userid);
+                // if there is such id show the form 
+                if($check > 0){
+                    $stmt = $con->prepare("UPDATE  shops.users SET RegStatus = 1 where UserId = ?");
+                    
+                    $stmt->execute(array($userid));
+                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Activate".'</div>';
                     redirectPage($Msg,'back' , 5);
                     
                 }else{
