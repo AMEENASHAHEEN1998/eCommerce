@@ -1,4 +1,5 @@
 <?php
+    ob_start(); // output buffering start
     session_start();
     if(isset($_SESSION['UserName'])){
         $pageTitle ='Dashbored';
@@ -48,7 +49,7 @@
         <div class="container latest">
             <div class = "row">
                 <div class="col-sm-6">
-                    <div class="panel panel-defult panalBG">
+                    <div class="panel panel-default panalBG">
                         <div class="panel-heading">
                             <?php $latestNumber = 5; ?>
                             <i class="fa fa-users"></i> Latest <?php echo $latestNumber?> Registered Users
@@ -57,15 +58,18 @@
                             <ul class = "list-unstyled latest-users ">
                                 <?php $latestUsers = getLatest("*" ,"shops.users" ,"UserId" ,$latestNumber);
                                     foreach($latestUsers as $user){
-                                    echo "<li>".$user["UserName"] ."<a href='  '  class='btn btn-success pull-right '><i class='far fa-edit'></i>Edit</a>";
-                                    }
+                                    echo "<li>".$user["UserName"] ."<a href='member.php?do=Edit&userid=".$user["UserId"]."'class='btn btn-success pull-right '><i class='far fa-edit'></i>Edit</a>";
+                                    if($user['RegStatus'] == 0){
+                                        echo "<a href='member.php?do=Active&userid=". $user['UserId'] ." ' class='btn btn-info btnPadd active pull-right'><i class='far fa-window-close'></i>Active</a>";
+                                        }
+                                }
                                 ?>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="panel panel-defult panalBG">
+                    <div class="panel panel-default panalBG">
                         <div class="panel-heading">
                             <i class="fa fa-tag"></i> Latest Items
                         </div>
@@ -85,3 +89,4 @@
         header('location:index.php');
         exit();
     }
+    ob_end_flush();

@@ -3,6 +3,7 @@
 ** member page
 ** can add | delete | edit | update | manage
 */
+    ob_start(); // output buffering start
     session_start();
     if(isset($_SESSION['UserName'])){
         $pageTitle ='Member';
@@ -41,10 +42,10 @@
                                     echo "<td>" . $row['FullName'] . "</td>";
                                     echo "<td>" . $row['Date'] ."</td>";
                                     echo "<td>
-                                                <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i>Edit</a>
-                                                <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='far fa-window-close'></i>Delete</a>";
+                                                <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
+                                                <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
                                                 if($row['RegStatus'] == 0){
-                                                echo "<a href='member.php?do=Active&userid=". $row['UserId'] ." ' class='btn btn-info btnPadd active'><i class='far fa-window-close'></i>Active</a>";
+                                                echo "<a href='member.php?do=Active&userid=". $row['UserId'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-close'></i> Active</a>";
                                                 }
                                                 echo"</td>";
                                     
@@ -390,4 +391,6 @@
 
     }else{
         header('location:index.php');
+        exit();
     }
+    ob_end_flush();

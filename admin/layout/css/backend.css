@@ -25,7 +25,7 @@ body{
 /* end login index.php style */
 
 /* start nav bar*/
-.dropdown-menu,ul>li:hover{
+.dropdown-menu,.ulli>ul>li:hover{
     background-color: #3498db;
     color : #fff;
     
@@ -89,24 +89,27 @@ ul>li>a {
 .home-stats .st-comments{
     background-color: #8d44ad;
 }
-.panalBG{
-    background-color: blanchedalmond;
-}
+
 .latest{
     margin-top: 30px;
+
 }
 .latest-users{
     margin-bottom:0 ;
 }
 .latest-users li {
-    padding: 10px 0;
+    padding: 9px 3px;
     overflow: hidden;
 }
 .latest-users li:nth-child(odd){
-    background-color: #eee;
+    background-color: rgb(174, 210, 245);
 }
-.latest-users .btn-success{
+.latest-users .btn-success,
+.latest-users .btn-info{
     padding: 2px 8px;
+}
+.latest-users .btn-info{
+    margin-right: 5px;
 }
 /* end dashbored page */
 
@@ -153,3 +156,54 @@ h2{
     margin-left: 5px;
 }
 /* end member page */
+
+/* start category page*/
+.categories .cat{
+    position: relative;
+    overflow: hidden;
+}
+.categories .cat:hover {
+    background-color: #eee;
+}
+.categories .cat:hover .hidden-buttons{
+    right: 10px;
+}
+.categories .cat .hidden-buttons{
+    -webkit-transition: all .5x ease-in-out;
+    -moz-transition:all .5x ease-in-out ;
+    transition:all .5x ease-in-out ;
+    position: absolute;
+    top: 0px;
+    right: -120px;
+}
+.categories .cat .hidden-buttons a{
+    margin-right: 5px;
+}
+.categories .cat h3{
+    margin: 0 0 10px;
+}
+.categories .cat:last-of-type ~ hr{
+    display: none;
+}
+.categories .cat .Visibility{
+    background-color: #f0932b;
+    color: #fff;
+    padding: 4px 7px;
+    margin-right: 6px;
+    border-radius: 6px;
+}
+.categories .cat .AllowComment{
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 4px 7px;
+    margin-right: 6px;
+    border-radius: 6px;
+}
+.categories .cat .AllowAdverties{
+    background-color: #e056fd;
+    color: #fff;
+    padding: 4px 7px;
+    margin-right: 6px;
+    border-radius: 6px;
+}
+/* end category page*/
