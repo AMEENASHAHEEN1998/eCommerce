@@ -162,6 +162,14 @@ h2{
     position: relative;
     overflow: hidden;
 }
+.categories .ordering a{
+    color: #888;
+    text-decoration: none;
+}
+.categories .ordering .active{
+    color: #f00;
+    font-weight: bold;
+}
 .categories .cat:hover {
     background-color: #eee;
 }
@@ -206,4 +214,5 @@ h2{
     margin-right: 6px;
     border-radius: 6px;
 }
+
 /* end category page*/

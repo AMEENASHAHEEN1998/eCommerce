@@ -10,7 +10,12 @@
         include 'init.php';
         $do =isset($_GET['do']) ?$do=$_GET['do']:$do = 'Manage';
         if($do == "Manage"){
-            $stmt = $con->prepare("SELECT * from shops.categores");
+            $sort = 'ASC'; //DESC OR ASC
+            $sort_array = array("ASC","DESC");
+            if(isset($_GET['sort']) && in_array($_GET['sort'] , $sort_array)){
+                $sort = $_GET['sort'];
+            }
+            $stmt = $con->prepare("SELECT * from shops.categores ORDER BY Ordering $sort");
             $stmt->execute();
             $rows = $stmt->fetchAll();
 
@@ -18,13 +23,20 @@
             <h2 class="text-center">Manage Categories</h2>
             <div class= "container categories">
                 <div class="panel panel-default ">
-                    <div class="panel-heading">Manage Categories</div>
+                    <div class="panel-heading">
+                        Manage Categories
+                        <div class="ordering pull-right">
+                            Ordering:
+                            <a class = "<?php if($_GET['sort'] = 'ASC'){echo active ;} ?>" href="?sort=ASC">ASC</a>
+                            <a class = "<?php if($_GET['sort'] = 'DESC'){echo active ;} ?>" href="?sort=DESC">DESC</a>
+                        </div>
+                        </div>
                     <div class="panel-body">
                         <?php
                         foreach($rows as $row){
                             echo "<div class='cat'>";
                                 echo "<div class='hidden-buttons'>";
-                                    echo "<a href='#' class='btn btn-xs btn-primary'><i class='fa fa-edit'></i>Edit</a>";
+                                    echo "<a href='categories.php?do=Edit&catid=". $row['ID'] . " 'class='btn btn-xs btn-primary'><i class='fa fa-edit'></i>Edit</a>";
                                     echo "<a href='#' class='btn btn-xs btn-danger'><i class='fa fa-close'></i>Delete</a>";
                                 echo"</div>";
                                 echo "<h3>".$row['Name'] . "</h3>";
@@ -211,6 +223,111 @@
        
             
         }elseif($do == 'Edit'){
+            // check if GET request category id is number and get userid value
+            $catid = isset($_GET['catid']) && is_numeric($_GET['catid'])? intval($_GET['catid']): 0 ;
+           // select all data depends in this id 
+            $stmt = $con->prepare("SELECT * FROM shops.categores WHERE ID = ?");
+            //ececute query
+            $stmt->execute(array($catid));
+            // featch data from db
+            $row = $stmt->fetch(); 
+            // the row count 
+            $count = $stmt->rowCount();
+            // if there is such id show the form 
+            if($count > 0){?>
+
+            <h2 class=" text-center"  >Edit Category</h2>
+            <div class ='container'>
+                <form class='form-horizontal ' action = '?do=Update' method = 'POST'>
+                <input type = 'hidden' value = '<?php echo $catid ?>' name = 'catid'>
+                <!-- Start Name filed-->
+                    <div class ="row form-group form-group-lg">
+                        <label class="control-lable col-sm-2 " ><?php echo lang('Name')?></label>
+                        <div class = "col-sm-10 col-md-5">
+                            <input type="text" name="name" class="form-control"  required = "required" placeholder = "Add New Categories Name " autocomplete = 'off' value = "<?php echo $row['Name']; ?>">
+                        </div>
+                    </div>
+                <!-- End Name filed-->
+
+                <!-- Start Description filed-->
+                    <div class ='row form-group'>
+                        <label class='control-lable col-sm-2' ><?php echo lang('Description')?></label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <input type="text" name='description' class=' form-control'  placeholder = "Descripe the categories" value = "<?php echo $row['Description']; ?>">
+                        </div>
+                    </div>
+                <!-- End Description filed-->
+                <!-- Start Ordering filed-->
+                    <div class ='row form-group'>
+                        <label class='control-lable col-sm-2' ><?php echo lang('Ordering')?></label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <input type="text" name='ordering'  class='form-control'  placeholder = "Number to Arange Category" value = "<?php echo $row['Ordering']; ?>">
+                        </div>
+                    </div>
+                <!-- End Ordering filed-->
+                <!-- Start Visiblility filed-->
+                    <div class ='row form-group '>
+                        <label class=' col-sm-2 control-lable' ><?php echo lang('Visible')?></label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <div>
+                                <input type="radio" id="visible-yes" name='visiblility'  value="0" <?php if($row['Visibility'] == 0 ){ echo "checked" ;} ?>  >
+                                <label for="visible-yes">Yes</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="visible-no" name='visiblility'  value="1" <?php if($row['Visibility'] == 1 ){ echo "checked" ;} ?> >
+                                <label for="visible-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                <!-- End Visiblility filed-->
+                <!-- Start Commenting filed-->
+                <div class ='row form-group '>
+                        <label class=' col-sm-2 control-lable' ><?php echo lang('Commenting')?></label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <div>
+                                <input type="radio" id="comment-yes" name='Commenting'  value="0" <?php if($row['AllowComment'] == 0 ){ echo "checked" ;} ?> >
+                                <label for="comment-yes">Yes</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="comment-no" name='Commenting'  value="1" <?php if($row['AllowComment'] == 1 ){ echo "checked" ;} ?> >
+                                <label for="comment-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                <!-- End Commenting filed-->
+                <!-- Start Ads filed-->
+                <div class ='row form-group '>
+                        <label class=' col-sm-2 control-lable' ><?php echo lang('Ads')?></label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <div>
+                                <input type="radio" id="Ads-yes" name='Ads'  value="0" <?php if($row['AllowAdverties'] == 0 ){ echo "checked" ;} ?> >
+                                <label for="Ads-yes">Yes</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="Ads-no" name='Ads'  value="1" <?php if($row['AllowAdverties'] == 1 ){ echo "checked" ;} ?> >
+                                <label for="Ads-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                <!-- End Ads filed-->
+                <!-- Start save filed-->
+                    <div class ='row form-group text-center'>
+                        <div class = 'col-sm-offset-2 col-lg-offset-2 col-sm-10'>
+                            <input type="submit" value='<?php echo lang('btnAddMember')?>' class='btn btn-primary '>
+                        </div>
+                    </div>
+                <!-- End save filed-->
+
+                </form>
+            </div> 
+        <?php 
+            // else show if ther is no such id in db
+            }else {
+                echo '<div class = "container">';
+                    $Msg = "<div class ='alert alert-danger' >there is no id equiavilant " . $catid .'</div>';
+                    redirectPage($Msg ,'back' , 3);
+                echo '</div>';
+            }
             
         }elseif($do == 'Update'){
             
