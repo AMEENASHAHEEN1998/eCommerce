@@ -182,6 +182,8 @@ h2{
 .categories .headingPanel{
     color: #959595;
     font-weight: bold;
+    padding: 10px auto 10px 30px;
+    background-color: #eaeaea;
 }
 .categories .cat{
     position: relative;
@@ -227,7 +229,7 @@ h2{
     font-weight: bold;
     color: #6a6a6a;
 }
-.categories .cat .full_view p {
+.categories .cat .full-view p {
     margin:10px 0 ; 
     color: #707070;
 }

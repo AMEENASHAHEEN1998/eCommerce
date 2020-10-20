@@ -180,7 +180,7 @@
             }else {
                 echo '<div class = "container">';
                     $Msg = "<div class ='alert alert-danger' >Sorry you can not access this browser directly</div>";
-                    redirectPage($Msg,'back' , 5);
+                    redirectPage($Msg);
                 echo '</div>';
             }
             echo "</div>";
