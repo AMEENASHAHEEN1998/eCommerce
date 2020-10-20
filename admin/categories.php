@@ -25,10 +25,14 @@
                 <div class="panel panel-default ">
                     <div class="panel-heading">
                         Manage Categories
-                        <div class="ordering pull-right">
+                        <div class="option pull-right">
                             Ordering:
-                            <a class = "<?php if($_GET['sort'] = 'ASC'){echo active ;} ?>" href="?sort=ASC">ASC</a>
-                            <a class = "<?php if($_GET['sort'] = 'DESC'){echo active ;} ?>" href="?sort=DESC">DESC</a>
+                            <a class = "<?php if($_GET['sort'] == 'ASC'){echo "active" ;} ?>" href="?sort=ASC">ASC</a>
+                            |
+                            <a class = "<?php if($_GET['sort'] == 'DESC'){echo "active" ;} ?>" href="?sort=DESC">DESC</a>
+                            View:
+                            <span class='active' data-view = 'Full'>Full</span> |
+                            <span>Classic</span>
                         </div>
                         </div>
                     <div class="panel-body">
@@ -37,26 +41,29 @@
                             echo "<div class='cat'>";
                                 echo "<div class='hidden-buttons'>";
                                     echo "<a href='categories.php?do=Edit&catid=". $row['ID'] . " 'class='btn btn-xs btn-primary'><i class='fa fa-edit'></i>Edit</a>";
-                                    echo "<a href='#' class='btn btn-xs btn-danger'><i class='fa fa-close'></i>Delete</a>";
+                                    echo "<a href='categories.php?do=Delete&catid=". $row['ID'] . " ' class='confirm btn btn-xs btn-danger'><i class='fa fa-close'></i>Delete</a>";
                                 echo"</div>";
                                 echo "<h3>".$row['Name'] . "</h3>";
-                                echo "<p>"; 
-                                    if($row['Description'] == ""){
-                                        echo "this category without description";
-                                    } else{
-                                       echo $row['Description'];
-                                    }
-                                echo "</p>";
-                                if($row['Visibility'] == 1){echo "<span class='Visibility'> Hidden</span>";}
-                                if($row['AllowComment'] == 1){echo "<span class='AllowComment'>Comment Disable</span>";}
-                                if($row['AllowAdverties'] == 1){echo "<span class='AllowAdverties'>Adverties Disable</span>";}
-                            echo "</div>";
+                                echo "<div class='full_view'>";
+                                    echo "<p>"; 
+                                        if($row['Description'] == ""){
+                                            echo "this category without description";
+                                        } else{
+                                        echo $row['Description'];
+                                        }
+                                    echo "</p>";
+                                    if($row['Visibility'] == 1){echo "<span class='Visibility'> Hidden</span>";}
+                                    if($row['AllowComment'] == 1){echo "<span class='AllowComment'>Comment Disable</span>";}
+                                    if($row['AllowAdverties'] == 1){echo "<span class='AllowAdverties'>Adverties Disable</span>";}
+                                echo "</div>";   
+                                echo "</div>";
                             echo '<hr>';
                         }
                         
                         ?>
                     </div>
                 </div>
+                <a href="categories.php?do=Add" class = " btn btn-primary"><i class = "fa fa-plus"></i> New Category</a>
             </div>
             <?php
             
@@ -137,7 +144,7 @@
                 <!-- End Ads filed-->
                 <!-- Start save filed-->
                     <div class ='row form-group text-center'>
-                        <div class = 'col-sm-offset-2 col-lg-offset-2 col-sm-10'>
+                        <div class = 'col-sm-10'>
                             <input type="submit" value='<?php echo lang('btnAddMember')?>' class='btn btn-primary '>
                         </div>
                     </div>
@@ -312,7 +319,7 @@
                 <!-- End Ads filed-->
                 <!-- Start save filed-->
                     <div class ='row form-group text-center'>
-                        <div class = 'col-sm-offset-2 col-lg-offset-2 col-sm-10'>
+                        <div class = 'col-sm-10'>
                             <input type="submit" value='<?php echo lang('btnAddMember')?>' class='btn btn-primary '>
                         </div>
                     </div>
@@ -330,9 +337,86 @@
             }
             
         }elseif($do == 'Update'){
-            
-        }elseif($do == 'Delete'){ // delete page member
+            echo "<h2 class='text-center'>Update Category</h2> ";
+            echo "<div class = 'container' >" ;
+        
+            if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // نفس الاسم الي في التاغ زي اتربيوت النيم
+                $catid          = $_POST['catid'];
+                $name           = $_POST['name'];
+                $description    = $_POST['description'];
+                $ordering       = $_POST['ordering'];
+                $visiblility    = $_POST['visiblility'];
+                $Commenting     = $_POST['Commenting'];
+                $Ads            = $_POST['Ads'];
 
+
+                
+                // validation for input
+
+                $formErrors = array();
+                if(strlen($name) < 4){
+                    $formErrors[] = "<div class = 'alert alert-danger'> User Name can not be <strong> less than 4 </strong> </div>";
+                }
+                if(strlen($name) > 20){
+                    $formErrors[] = "<div class = 'alert alert-danger'> User Name can not be <strong>more than 20</strong> </div>";
+                }
+                if(empty($name)){
+                    $formErrors[] = "<div class = 'alert alert-danger'> User Name is <strong>empty</strong> </div>";
+                }
+                
+
+                foreach($formErrors as $error){
+                    $Msg= $error ;
+                    redirectPage($Msg,'back' , 5);
+                }
+
+                // check if is there no error in update process
+                if(empty($formErrors)){
+                    //echo $username . $userid . $email . $fullname;
+                    
+                    $stmt = $con-> prepare("UPDATE shops.categores SET Name = ? , Description = ? , Visibility = ? , AllowComment = ? , AllowAdverties = ? WHERE ID = ?");
+                    $stmt->execute(array($name ,$description ,$ordering ,$visiblility ,$Commenting ,$Ads));
+
+                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
+                    redirectPage($Msg,'back' , 5);
+                   // redirectPage($Msg,'member.php' , 5);
+                
+                }
+                
+            }else {
+                $Msg = "<div class = 'alert alert-danger'>Sorry you can not access this browser directly</div>";
+                redirectPage($Msg);
+                
+            }
+            echo "</div>";
+            
+        
+        }elseif($do == 'Delete'){ // delete page member
+            echo "<h2 class='text-center'>Delete Category</h2> ";
+            echo "<div class = 'container' >" ;
+
+                // check if GET request user id is number and get userid value
+                $catid = isset($_GET['catid']) && is_numeric($_GET['catid'])? intval($_GET['catid']): 0 ;
+                // select all data depends in this id 
+                
+                $check = checkItem('ID','shops.categores',$catid);
+                // if there is such id show the form 
+                if($check > 0){
+                    $stmt = $con->prepare("DELETE FROM shops.categores WHERE ID = :zid ");
+                    $stmt->bindParam(":zid" , $catid);
+                    $stmt->execute();
+                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Deleted".'</div>';
+                    redirectPage($Msg,'back' , 5);
+                    
+                }else{
+                    echo '<div class = "container">'; 
+                        $Msg = "id number is not exist";
+                        redirectPage($Msg);
+                    echo '</div>';
+
+                }
+            echo'</div>';  
             
         }
         include $tpl . 'Footer.php';

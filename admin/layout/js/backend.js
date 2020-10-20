@@ -30,4 +30,16 @@ $( document ).ready(function() {
         return confirm("Are you sure ?");
     });
 
+    $('.cat h3').click(function(){
+        $(this).next('.full_view').fadeToggle(500);
+    });
+
+    $('.option span').click(function(){
+        $(this).addClass('active').siblimgs('span').removeClass('active');
+        if($(this).data('view')=== 'full'){
+            $('.cat .full_view').fadeIn(200);
+        }else{
+            $('.cat .full_view').fadeOut(200);
+        }
+    });
 });

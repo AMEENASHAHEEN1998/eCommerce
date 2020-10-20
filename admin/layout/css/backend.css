@@ -162,13 +162,22 @@ h2{
     position: relative;
     overflow: hidden;
 }
-.categories .ordering a{
+.categories hr{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.categories .option a{
     color: #888;
     text-decoration: none;
+    cursor: pointer;
+
 }
-.categories .ordering .active{
+.categories .option span{
+    color: #888;
+    cursor: pointer;
+}
+.categories .option .active{
     color: #f00;
-    font-weight: bold;
 }
 .categories .cat:hover {
     background-color: #eee;
@@ -188,7 +197,11 @@ h2{
     margin-right: 5px;
 }
 .categories .cat h3{
-    margin: 0 0 10px;
+    margin: 0;
+    cursor: pointer;
+}
+.categories .cat .full_view p {
+    margin:10px 0 ; 
 }
 .categories .cat:last-of-type ~ hr{
     display: none;

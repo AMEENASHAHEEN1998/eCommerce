@@ -103,7 +103,7 @@
                 <!-- End Full Name filed-->
                 <!-- Start save filed-->
                     <div class ='row form-group text-center'>
-                        <div class = 'col-sm-offset-2 col-lg-offset-2 col-sm-10'>
+                        <div class = ' col-sm-10'>
                             <input type="submit" value='<?php echo lang('btnAddMember')?>' class='btn btn-primary '>
                         </div>
                     </div>
@@ -240,7 +240,7 @@
                     <!-- End Full Name filed-->
                     <!-- Start save filed-->
                         <div class ='row form-group text-center'>
-                            <div class = 'col-sm-offset-2 col-lg-offset-2 col-sm-10'>
+                            <div class = ' col-sm-10'>
                                 <input type="submit" value='<?php echo lang('Save')?>' class='btn btn-primary '>
                             </div>
                         </div>
@@ -296,7 +296,8 @@
                 }
 
                 foreach($formErrors as $error){
-                    echo $error ;
+                    $Msg= $error ;
+                    redirectPage($Msg,'back' , 5);
                 }
 
                 // check if is there no error in update process
