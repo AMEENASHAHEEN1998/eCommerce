@@ -1,8 +1,8 @@
 <?php
-/*
-** item page
-** can add | delete | edit | update | manage
-*/
+    /*
+    ** item page
+    ** can add | delete | edit | update | manage
+    */
     ob_start(); // output buffering start
     session_start();
     if(isset($_SESSION['UserName'])){
@@ -212,7 +212,7 @@
             // the row count 
             $count = $stmt->rowCount();
             // if there is such id show the form 
-            if($count > 0){?>
+            if($count > 0){ ?>
 
                 <h2 class=" text-center"  >Edit Item</h2>
                 <div class ='container'>
@@ -220,7 +220,7 @@
                     <input type = 'hidden' value = '<?php echo $itemid ?>' name = 'itemid'>
 
                 <!-- Start Name filed-->
-                    <div class ="row form-group form-group-lg">
+                <div class ="row form-group form-group-lg">
                         <label class="control-lable col-sm-2 " ><?php echo lang('Name')?></label>
                         <div class = "col-sm-10 col-md-5">
                             <input type="text" name="name" class="form-control"  required = "required" placeholder = "Add New Item Name " value="<?php echo $row['Name'] ?>" >
@@ -337,7 +337,7 @@
                 $country            = $_POST['country'];
                 $status             = $_POST['status'];
                 $member             = $_POST['member'];
-                $categories         = $_POST['categories'];;
+                $categories         = $_POST['categories'];
 
                 
                 // validation for input
@@ -388,7 +388,12 @@
                    // redirectPage($Msg,'member.php' , 5);
                 
                 }
-            
+            }else {
+                $Msg = "<div class = 'alert alert-danger'>Sorry you can not access this browser directly</div>";
+                redirectPage($Msg);
+                
+            }
+            echo "</div>";
         }
         elseif($do == 'Delete'){ 
             echo "<h2 class='text-center'>Delete Member</h2> ";
@@ -427,4 +432,3 @@
         exit();
     }
     ob_end_flush();
-?>
