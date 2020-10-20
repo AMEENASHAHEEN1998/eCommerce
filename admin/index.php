@@ -36,7 +36,7 @@
     <input class="form-control" type = "text" name ="user" placeholder = "User Name" autocomplate="off"/>
     <input class="form-control" type = "password" name ="password" placeholder = "User Password" autocomplate="new-password"/>
     <input class="btn btn-primary btn-block" type = "submit" value = "Login"/>
-
+    <p>You can not have account click to link to Register <a href="register.php">Register Now !</a></p>
 </form>
 
 <?php

@@ -23,16 +23,16 @@
             <h2 class="text-center">Manage Categories</h2>
             <div class= "container categories">
                 <div class="panel panel-default ">
-                    <div class="panel-heading">
-                        Manage Categories
+                    <div class="panal-heading headingPanel">
+                        <i class="fa fa-edit"></i> Manage Categories
                         <div class="option pull-right">
-                            Ordering:
+                            <i class="fa fa-sort" ></i> Ordering: [
                             <a class = "<?php if($_GET['sort'] == 'ASC'){echo "active" ;} ?>" href="?sort=ASC">ASC</a>
                             |
-                            <a class = "<?php if($_GET['sort'] == 'DESC'){echo "active" ;} ?>" href="?sort=DESC">DESC</a>
-                            View:
+                            <a class = "<?php if($_GET['sort'] == 'DESC'){echo "active" ;} ?>" href="?sort=DESC">DESC</a> ]
+                            <i class="fa fa-eye" ></i> View:[
                             <span class='active' data-view = 'Full'>Full</span> |
-                            <span>Classic</span>
+                            <span class =''>Classic</span> ]
                         </div>
                         </div>
                     <div class="panel-body">
@@ -43,7 +43,7 @@
                                     echo "<a href='categories.php?do=Edit&catid=". $row['ID'] . " 'class='btn btn-xs btn-primary'><i class='fa fa-edit'></i>Edit</a>";
                                     echo "<a href='categories.php?do=Delete&catid=". $row['ID'] . " ' class='confirm btn btn-xs btn-danger'><i class='fa fa-close'></i>Delete</a>";
                                 echo"</div>";
-                                echo "<h3>".$row['Name'] . "</h3>";
+                                echo "<h3>". $row['Name'] . "</h3>";
                                 echo "<div class='full_view'>";
                                     echo "<p>"; 
                                         if($row['Description'] == ""){
@@ -52,9 +52,9 @@
                                         echo $row['Description'];
                                         }
                                     echo "</p>";
-                                    if($row['Visibility'] == 1){echo "<span class='Visibility'> Hidden</span>";}
-                                    if($row['AllowComment'] == 1){echo "<span class='AllowComment'>Comment Disable</span>";}
-                                    if($row['AllowAdverties'] == 1){echo "<span class='AllowAdverties'>Adverties Disable</span>";}
+                                    if($row['Visibility'] == 1){echo "<span class='Visibility'><i class='fa fa-eye' ></i>  Hidden</span>";}
+                                    if($row['AllowComment'] == 1){echo "<span class='AllowComment'><i class='fa fa-close' ></i> Comment Disable</span>";}
+                                    if($row['AllowAdverties'] == 1){echo "<span class='AllowAdverties'><i class='fa fa-close' ></i> Adverties Disable</span>";}
                                 echo "</div>";   
                                 echo "</div>";
                             echo '<hr>';

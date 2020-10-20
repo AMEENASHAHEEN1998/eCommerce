@@ -2,6 +2,9 @@ $( document ).ready(function() {
 
     'use strict';
 
+    // select box it pulign
+    $('select').selectBoxIt();
+    $("select").selectBoxIt({ autoWidth: false });
     // hidden placeholder in login form
     $('[placeholder]').focus(function(){
         $(this).attr("data-text" , $(this).attr("placeholder"));
@@ -36,7 +39,7 @@ $( document ).ready(function() {
 
     $('.option span').click(function(){
         $(this).addClass('active').siblimgs('span').removeClass('active');
-        if($(this).data('view')=== 'full'){
+        if($(this).data('view') == 'full'){
             $('.cat .full_view').fadeIn(200);
         }else{
             $('.cat .full_view').fadeOut(200);

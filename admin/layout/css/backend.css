@@ -13,6 +13,9 @@ body{
 .login h4{
     color: #888;
 }
+.login p{
+    color: #888;
+}
 .login input{
     margin-bottom: 10px;
 }
@@ -24,6 +27,24 @@ body{
 }
 /* end login index.php style */
 
+/* start register index.php style */
+.register{
+    width: 50%;
+    margin: 150px 100px;
+}
+.register h4{
+    color: #888;
+}
+.register input{
+    margin-bottom: 10px;
+}
+.register .form-control{
+    background-color: #eaeaea;
+}
+.register .btn{
+    background-color: #008dde;
+}
+/* end register index.php style */
 /* start nav bar*/
 .dropdown-menu,.ulli>ul>li:hover{
     background-color: #3498db;
@@ -158,6 +179,10 @@ h2{
 /* end member page */
 
 /* start category page*/
+.categories .headingPanel{
+    color: #959595;
+    font-weight: bold;
+}
 .categories .cat{
     position: relative;
     overflow: hidden;
@@ -199,9 +224,12 @@ h2{
 .categories .cat h3{
     margin: 0;
     cursor: pointer;
+    font-weight: bold;
+    color: #6a6a6a;
 }
 .categories .cat .full_view p {
     margin:10px 0 ; 
+    color: #707070;
 }
 .categories .cat:last-of-type ~ hr{
     display: none;
