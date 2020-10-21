@@ -11,7 +11,60 @@
         $do =isset($_GET['do']) ?$do=$_GET['do']:$do = 'Manage';
         if($do == "Manage"){
 
-            echo "hello ";
+            // select all user in db without admin
+            $stmt = $con->prepare("SELECT shops.items.* , shops.categores.Name AS categoryName , shops.users.UserName AS MemberName
+            FROM shops.items
+            INNER JOIN shops.categores on shops.categores.ID = shops.items.CatId
+            INNER JOIN shops.users on shops.users.UserId = shops.items.MemberId");
+            $stmt->execute();
+            $items = $stmt->fetchAll();
+            ?>
+            <h2 class=" text-center"  >Manage Items</h2>
+            <div class ='container'>
+                <div class = 'table-responsive'>
+                    <table class = 'main-table text-center table table-bordered'>
+                        <tr>
+                            <td>#ID</td>
+                            <td>Name</td>
+                            <td>Description</td>
+                            <td>Price</td>
+                            <td>Adding Date</td>
+                            <td>Country Made</td>
+                            <td>Category</td>
+                            <td>Member Name</td>
+                            <td>Control</td>
+
+                        </tr>
+                        <?php
+                            foreach($items as $item){
+                                echo "<tr>";
+                                    echo "<td>" . $item['ID'] . "</td>";
+                                    echo "<td>" . $item['Name'] . "</td>";
+                                    echo "<td>" . $item['Description'] . "</td>";
+                                    echo "<td>" . $item['Price'] . "</td>";
+                                    echo "<td>" . $item['AddDate'] ."</td>";
+                                    echo "<td>" . $item['CountryMade'] ."</td>";
+                                    echo "<td>" . $item['categoryName'] ."</td>";
+                                    echo "<td>" . $item['MemberName'] ."</td>";
+
+
+                                    echo "<td>
+                                                <a href='item.php?do=Edit&itemid=". $item['ID'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
+                                                <a href='item.php?do=Delete&itemid=". $item['ID'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
+                                                
+                                                echo"</td>";
+                                    
+                                echo "</tr>";
+
+                            }
+                        ?>
+                        
+                    </table>
+                </div>
+            <a href = "item.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Member</a>
+            </div>
+            
+            <?php
         }elseif($do == 'Add'){?>
 
             <h2 class=" text-center"  >Add New Item</h2>
@@ -380,12 +433,12 @@
                 if(empty($formErrors)){
                     //echo $username . $userid . $email . $fullname;
 
-                    $stmt = $con-> prepare("UPDATE shops.items SET Name = ? , Description = ? , Price = ?,CountryMade = ? ,Status= ? ,MemberId= ? ,CatId= ? WHERE ID = ?");
+                    $stmt = $con-> prepare("UPDATE shops.items SET Name = ? , Description = ? , Price = ? , CountryMade = ? ,Status= ? , MemberId= ? , CatId= ? WHERE ID = ?");
                     $stmt->execute(array($name ,$description ,$price ,$country ,$status ,$member,$categories ));
 
                     $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
                     redirectPage($Msg,'back' , 5);
-                   // redirectPage($Msg,'member.php' , 5);
+                   
                 
                 }
             }else {
