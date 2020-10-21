@@ -21,6 +21,9 @@
           <a class="nav-link " href="member.php"><?php echo lang('Members')?></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link  " href="comment.php"><?php echo lang('Comments')?></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link  " href="#"><?php echo lang('Statistic')?></a>
         </li>
         <li class="nav-item">

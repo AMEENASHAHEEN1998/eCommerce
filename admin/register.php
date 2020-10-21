@@ -45,9 +45,10 @@
 ?>
 
 
+<div class = "registerDiv">
+<h4 class="text-center headerRegister">User Register</h4>
 
-<form class='form-horizontal register '  action = '<?php echo $_SERVER['PHP_SELF'] ?>' method = 'POST'>
-<h4 class="text-center">User Register</h4>
+            <form class='form-horizontal register class ='container' '  action = '<?php echo $_SERVER['PHP_SELF'] ?>' method = 'POST'>
 
                 <!-- Start username filed-->
                     <div class ="row form-group form-group-lg">
@@ -94,7 +95,7 @@
                 <!-- End save filed-->
 
                 </form>
-
+                </div>
 <?php
     include $tpl . 'Footer.php';
     ?>

@@ -45,7 +45,7 @@
                                                 <a href='member.php?do=Edit&userid=". $row['UserId'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
                                                 <a href='member.php?do=Delete&userid=". $row['UserId'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
                                                 if($row['RegStatus'] == 0){
-                                                echo "<a href='member.php?do=Active&userid=". $row['UserId'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-close'></i> Active</a>";
+                                                echo "<a href='member.php?do=Active&userid=". $row['UserId'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-check'></i> Active</a>";
                                                 }
                                                 echo"</td>";
                                     

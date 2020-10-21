@@ -3,6 +3,9 @@ body{
     background-color: #f4f4f4;
     font-size: 16px;
 }
+label{
+    padding-top: 6px;
+}
 /* end main rule*/
 
 /* start login index.php style */
@@ -28,13 +31,21 @@ body{
 /* end login index.php style */
 
 /* start register index.php style */
+.registerDiv{
+    position: relative;
+}
 .register{
-    width: 50%;
-    margin: 150px 100px;
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    left: 250px;
 }
-.register h4{
+.headerRegister{
     color: #888;
+    margin-top: 120px;
+    font-size: 24px;
 }
+
 .register input{
     margin-bottom: 10px;
 }
@@ -86,6 +97,17 @@ ul>li>a {
     padding: 20px;
     font-size: 15px;
     color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+.home-stats .stat i{
+    position: absolute;
+    font-size: 80px;
+    left: 30px;
+    top: 35px;
+}
+.home-stats .stat .info{
+    float: right;
 }
 .home-stats .stat a{
     color: #fff;
@@ -114,6 +136,14 @@ ul>li>a {
 .latest{
     margin-top: 30px;
 
+}
+.latest .toggle-info{
+    color: #999;
+    cursor: pointer;
+}
+.latest .toggle-info:hover{
+    color: #444;
+    
 }
 .latest-users{
     margin-bottom:0 ;
@@ -171,7 +201,7 @@ h2{
     color: #fff;
 }
 .btnPadd {
-    padding: 3px 10px;
+    padding: 1px 10px;
 }
 .active{
     margin-left: 5px;

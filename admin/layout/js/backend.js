@@ -1,5 +1,16 @@
 $( document ).ready(function() {
 
+
+    // dashbored
+    $('.toggle-info').click(function(){
+        $(this).toggleClass("selected").parent().next('.panel-body').fadeToggle(500);
+        if($(this).hasClass('selected')){
+            $(this).html('<i class="fa fa-minus fa-lg"></i>');
+        }else{
+            $(this).html('<i class="fa fa-plus fa-lg"></i>');
+
+        }
+    });
     'use strict';
 
     // select box it pulign

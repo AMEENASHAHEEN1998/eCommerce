@@ -51,7 +51,9 @@
                                     echo "<td>
                                                 <a href='item.php?do=Edit&itemid=". $item['ID'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
                                                 <a href='item.php?do=Delete&itemid=". $item['ID'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
-                                                
+                                                if($item['Approve'] == 0){
+                                                    echo "<a href='item.php?do=Approve&itemid=". $item['ID'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-check'></i> Approve</a>";
+                                                }
                                                 echo"</td>";
                                     
                                 echo "</tr>";
@@ -61,7 +63,7 @@
                         
                     </table>
                 </div>
-            <a href = "item.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Member</a>
+            <a href = "item.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Item</a>
             </div>
             
             <?php
@@ -257,7 +259,7 @@
             // check if GET request user id is number and get userid value
             $itemid = isset($_GET['itemid']) && is_numeric($_GET['itemid'])? intval($_GET['itemid']): 0 ;
            // select all data depends in this id 
-            $stmt = $con->prepare("SELECT * FROM shops.items WHERE ID = ?  LIMIT 1");
+            $stmt = $con->prepare("SELECT * FROM shops.items WHERE ID = ? ");
             //ececute query
             $stmt->execute(array($itemid));
             // featch data from db
@@ -308,12 +310,12 @@
                 <div class ="row form-group form-group-lg">
                     <label class="control-lable col-sm-2 " >Status</label>
                     <div class = "col-sm-10 col-md-5">
-                        <select  name="status"  value = "<?php echo $row['Status'] ?>">
+                        <select  name="status"  >
                             <option value="0">...</option>
-                            <option value="1">New</option>
-                            <option value="2">Like New</option>
-                            <option value="3">Used</option>
-                            <option value="4">Old</option>
+                            <option value="1" <?php if($row['Status'] == 1){echo "selected";} ?> >New</option>
+                            <option value="2" <?php if($row['Status'] == 2){echo "selected";} ?>>Like New</option>
+                            <option value="3" <?php if($row['Status'] == 3){echo "selected";} ?>>Used</option>
+                            <option value="4" <?php if($row['Status'] == 4){echo "selected";} ?>>Old</option>
 
                         </select>
                     </div>
@@ -323,14 +325,14 @@
                 <div class ="row form-group form-group-lg">
                     <label class="control-lable col-sm-2 " >Member</label>
                     <div class = "col-sm-10 col-md-5">
-                        <select  name="member"  value="<?php echo $row['MemberId'] ?>">
+                        <select  name="member"  ">
                             <option value="0">...</option>
                             <?php 
                                 $stmt = $con->prepare('SELECT * FROM shops.users');
                                 $stmt->execute();
                                 $users = $stmt->fetchAll();
                                 foreach($users as $user){
-                                    echo '<option value = " ' .$user['UserId'] . '">" '.$user['UserName'] .'" </option>';
+                                    echo '<option value = " ' .$user['UserId'] . '" '; if($row['MemberId'] == $user['UserId'] ){echo "selected";} echo' >" '.$user['UserName'] .'" </option>';
                                 }
                             ?>
 
@@ -342,14 +344,14 @@
                 <div class ="row form-group form-group-lg">
                     <label class="control-lable col-sm-2 " >Categories</label>
                     <div class = "col-sm-10 col-md-5">
-                        <select  name="categories" value="<?php echo $row['CatId'] ?>" >
+                        <select  name="categories"  >
                             <option value="0">...</option>
                             <?php 
                                 $stmt2 = $con->prepare('SELECT * FROM shops.categores');
                                 $stmt2->execute();
                                 $categories = $stmt2->fetchAll();
                                 foreach($categories as $category){
-                                    echo '<option value = " ' .$category['ID'] . '">" '.$category['Name'] .'" </option>';
+                                    echo '<option value = " ' .$category['ID'] . '"'; if($row['CatId'] == $category['ID'] ){echo "selected";} echo'>" '.$category['Name'] .'" </option>';
                                 }
                             ?>
 
@@ -384,6 +386,7 @@
         
             if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // نفس الاسم الي في التاغ زي اتربيوت النيم
+                $id                 = $_POST['itemid'];
                 $name               = $_POST['name'];
                 $description        = $_POST['description'];
                 $price              = $_POST['price'];
@@ -434,7 +437,7 @@
                     //echo $username . $userid . $email . $fullname;
 
                     $stmt = $con-> prepare("UPDATE shops.items SET Name = ? , Description = ? , Price = ? , CountryMade = ? ,Status= ? , MemberId= ? , CatId= ? WHERE ID = ?");
-                    $stmt->execute(array($name ,$description ,$price ,$country ,$status ,$member,$categories ));
+                    $stmt->execute(array($name ,$description ,$price ,$country ,$status ,$member,$categories ,$id ));
 
                     $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
                     redirectPage($Msg,'back' , 5);
@@ -474,10 +477,33 @@
                 }
             echo'</div>';
               
-        }elseif($do == 'Active'){ 
+        }elseif($do == 'Approve'){ 
+            echo "<h2 class='text-center'>Approve Items</h2> ";
+            echo "<div class = 'container' >" ;
 
-             
+                // check if GET request user id is number and get userid value
+                $itemid = isset($_GET['itemid']) && is_numeric($_GET['itemid'])? intval($_GET['itemid']): 0 ;
+                
+                $check = checkItem('ID','shops.items',$itemid);
+                // if there is such id show the form 
+                if($check > 0){
+                    $stmt = $con->prepare("UPDATE  shops.items SET Approve = 1 where ID = ?");
+                    
+                    $stmt->execute(array($itemid));
+                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Approve".'</div>';
+                    redirectPage($Msg,'back' , 5);
+                    
+                }else{
+                    echo '<div class = "container">'; 
+                        $Msg = "id number is not exist";
+                        redirectPage($Msg);
+                    echo '</div>';
+
+                }
+            echo'</div>';  
         }
+             
+        
         include $tpl . 'Footer.php';
 
     }else{
