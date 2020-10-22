@@ -368,6 +368,56 @@
                 <!-- End save filed-->
 
                 </form>
+                <?php 
+                // select all user in db without admin
+            $stmt = $con->prepare("SELECT shops.comments.*  , shops.users.UserName AS 'Member Name'
+            FROM shops.comments
+            
+            INNER JOIN shops.users on shops.users.UserId = shops.comments.User_Id
+            WHERE shops.comments.Item_Id = ?");
+            $stmt->execute(array($itemid));
+            $rows = $stmt->fetchAll();
+            if(! empty($rows)){
+            ?>
+            <h2 class=" text-center"  >Manage [<?php echo $row['Name'] ?>] Comments</h2>
+            <div class ='container'>
+                <div class = 'table-responsive'>
+                    <table class = 'main-table text-center table table-bordered'>
+                        <tr>
+                            
+                            <td>Comment</td>
+                            
+                            <td>User Name</td>
+                            <td>Added Date</td>
+                            <td>Control</td>
+                        </tr>
+                        <?php
+                            foreach($rows as $row){
+                                echo "<tr>";
+                                    
+                                    echo "<td>" . $row['Comment'] . "</td>";
+                                    
+                                    echo "<td>" . $row['Member Name'] . "</td>";
+                                    echo "<td>" . $row['CommentDate'] ."</td>";
+                                    echo "<td>
+                                                <a href='comment.php?do=Edit&commentid=". $row['ID'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
+                                                <a href='comment.php?do=Delete&commentid=". $row['ID'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
+                                                if($row['Status'] == 0){
+                                                echo "<a href='comment.php?do=Approve&commentid=". $row['ID'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-check'></i> Approve</a>";
+                                                }
+                                                echo"</td>";
+                                    
+                                echo "</tr>";
+
+                            }
+                        ?>
+                        
+                    </table>
+                </div>
+            
+            </div>
+                        <?php }?>
+            
                 </div>
             <?php
             // else show if ther is no such id in db

@@ -153,7 +153,7 @@ ul>li>a {
     overflow: hidden;
 }
 .latest-users li:nth-child(odd){
-    background-color: rgb(174, 210, 245);
+    background-color: #fefefe;
 }
 .latest-users .btn-success,
 .latest-users .btn-info{
@@ -161,6 +161,46 @@ ul>li>a {
 }
 .latest-users .btn-info{
     margin-right: 5px;
+}
+.latest .comment-box{
+    margin: 5px 0 10px ;
+}
+.latest .comment-box .member_name,
+.latest .comment-box .member_comment{
+    float: left;
+}
+.latest .comment-box .member_name{
+    width: 80px;
+    margin-right: 20px;
+    position: relative;
+    top: 10px;
+    text-align: center;
+}
+.latest .comment-box .member_comment{
+    width: calc(100%-100px);
+    background-color: #efefef;
+    position: absolute;
+    left: -28px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent #fefefe transparent transparent;
+    border-width: 15px;
+}
+.latest .comment-box .member_comment::before{
+    content: "";
+    display: block;
+    width: calc(100%-100px);
+    background-color: #efefef;
+    padding: 5px;
+    position: relative;
+}
+.latest .btn-box{
+    float: left;
+}
+.latest .btn-box .btn{
+    padding: 0;
 }
 /* end dashbored page */
 

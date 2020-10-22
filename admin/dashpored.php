@@ -102,6 +102,47 @@
                     </div>
                 </div>
             </div>
+            <!-- start comment panal -->
+            <div class = "row">
+                <div class="col-sm-6">
+                    <div class="panel panel-default panalBG">
+                        <div class="panel-heading">
+                            
+                            <i class="fa fa-comments-o"></i> Latest Comments
+                            <span class="toggle-info pull-right">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <?php 
+                                $stmt = $con->prepare("SELECT shops.comments.*  , shops.users.UserName AS 'Member Name'
+                                FROM shops.comments
+                                
+                                INNER JOIN shops.users on shops.users.UserId = shops.comments.User_Id
+                                ");
+                                $stmt->execute();
+                                $comments = $stmt->fetchAll();
+                                foreach($comments as $comment){
+                                    echo "<div class='comment-box'>";
+                                        echo "<span class='member_name' >". $comment['Member Name'] ."</span>";
+                                        echo "<p class='member_comment' >". $comment['Comment'] ."</p>";
+                                    echo "</div>";
+                                    echo "<div class='btn-box'>
+                                        <a href='comment.php?do=Edit&commentid=". $comment['ID'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
+                                        <a href='comment.php?do=Delete&commentid=". $comment['ID'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
+                                        if($comment['Status'] == 0){
+                                            echo "<a href='comment.php?do=Approve&commentid=". $comment['ID'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-check'></i> Approve</a>";
+                                        }
+                                    echo"</div>";
+
+                                }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        
         </div>
 <?php
 
