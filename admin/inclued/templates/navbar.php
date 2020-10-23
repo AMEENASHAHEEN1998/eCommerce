@@ -35,6 +35,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" style="color:#fff" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo lang('userName')?> </a>
           <ul class="dropdown-menu">
+            <li><a href="../index.php">View Shop</a></li>
             <li><a href="member.php?do=Edit&userid=<?php echo $_SESSION['ID']?>"><?php echo lang('EditProfile')?></a></li>
             <li><a href="#"><?php echo lang('Settings')?></a></li>
             <li><a href="logout.php"><?php echo lang('Logout')?></a></li>

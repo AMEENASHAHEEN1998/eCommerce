@@ -18,7 +18,7 @@
             $stmt = $con->prepare("SELECT * from shops.categores ORDER BY Ordering $sort");
             $stmt->execute();
             $rows = $stmt->fetchAll();
-
+            if(!empty($rows)){
             ?>
             <h2 class="text-center">Manage Categories</h2>
             <div class= "container categories">
@@ -67,6 +67,12 @@
                 <a href="categories.php?do=Add" class = " btn btn-primary"><i class = "fa fa-plus"></i> New Category</a>
             </div>
             <?php
+            }else{
+                echo '<div class = "container">';
+                    echo '<div class="nice-message">There\'s No Sush Category</div>';
+                    echo '<a href="categories.php?do=Add" class = " btn btn-primary"><i class = "fa fa-plus"></i> New Category</a>';
+                echo '</div>';
+            }
             
         }elseif($do == 'Add'){?>
 
@@ -376,8 +382,8 @@
                 if(empty($formErrors)){
                     //echo $username . $userid . $email . $fullname;
                     
-                    $stmt = $con-> prepare("UPDATE shops.categores SET Name = ? , Description = ? , Visibility = ? , AllowComment = ? , AllowAdverties = ? WHERE ID = ?");
-                    $stmt->execute(array($name ,$description ,$ordering ,$visiblility ,$Commenting ,$Ads));
+                    $stmt = $con->prepare("UPDATE shops.categores SET Name = ? , Description = ? , Ordering = ?, Visibility = ? , AllowComment = ? , AllowAdverties = ? WHERE ID = ?");
+                    $stmt->execute(array($name ,$description ,$ordering ,$visiblility ,$Commenting ,$Ads,$catid));
 
                     $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
                     redirectPage($Msg,'back' , 5);
