@@ -15,9 +15,11 @@
             $stmt = $con->prepare("SELECT shops.items.* , shops.categores.Name AS categoryName , shops.users.UserName AS MemberName
             FROM shops.items
             INNER JOIN shops.categores on shops.categores.ID = shops.items.CatId
-            INNER JOIN shops.users on shops.users.UserId = shops.items.MemberId");
+            INNER JOIN shops.users on shops.users.UserId = shops.items.MemberId
+            ORDER BY shops.items.ID DESC");
             $stmt->execute();
             $items = $stmt->fetchAll();
+            if(!empty($items)){
             ?>
             <h2 class=" text-center"  >Manage Items</h2>
             <div class ='container'>
@@ -67,6 +69,12 @@
             </div>
             
             <?php
+            }else {
+                echo '<div class = "container">';
+                    echo '<div class="nice-message">There\'s No Sush Item</div>';
+                    echo '<a href = "item.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Item</a>';
+                echo '</div>';
+            }
         }elseif($do == 'Add'){?>
 
             <h2 class=" text-center"  >Add New Item</h2>

@@ -17,9 +17,13 @@
             }
             
             // select all user in db without admin
-            $stmt = $con->prepare("SELECT * from shops.users where GroupId != 1 $query");
+            $stmt = $con->prepare("SELECT * from shops.users where GroupId != 1 $query ORDER BY shops.users.UserId DESC");
             $stmt->execute();
             $rows = $stmt->fetchAll();
+
+            if(! empty($rows)){
+
+            
             ?>
             <h2 class=" text-center"  ><?php echo lang('ManageMembers')?></h2>
             <div class ='container'>
@@ -59,7 +63,13 @@
             <a href = "member.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Member</a>
             </div>
             
-            <?php
+            <?php  
+            }else {
+                echo '<div class = "container">';
+                    echo '<div class="nice-message">There\'s No Sush Recored</div>';
+                    echo '<a href = "member.php?do=Add" class = "btn btn-primary"><i class = "fa fa-plus"></i> New Member</a>';
+                echo '</div>';
+            }
         }elseif($do == 'Add'){?>
 
             <h2 class=" text-center"  ><?php echo lang('AddMember')?></h2>
@@ -302,14 +312,24 @@
 
                 // check if is there no error in update process
                 if(empty($formErrors)){
-                    //echo $username . $userid . $email . $fullname;
 
-                    $stmt = $con-> prepare("UPDATE shops.users SET UserName = ? , Email = ? , FullName = ?,Password = ? WHERE UserId = ?");
-                    $stmt->execute(array($username ,$email ,$fullname ,$pass ,$userid ));
+                    $stmt2 = $con->prepare("SELECT * FROM shops.users WHERE UserName = ? AND UserId != ?");
+                    $stmt2 ->execute(array($username , $userid));
+                    $count = $stmt2->rowCount();
+                    if($count == 1){
+                        $Msg = "<div class = 'alert alert-danger'>Sorry This User Name Is Exist </div>";
+                        redirectPage($Msg,'back',3);
+                    }else {
+                        //echo $username . $userid . $email . $fullname;
 
-                    $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
-                    redirectPage($Msg,'back' , 5);
-                   // redirectPage($Msg,'member.php' , 5);
+                        $stmt = $con-> prepare("UPDATE shops.users SET UserName = ? , Email = ? , FullName = ?,Password = ? WHERE UserId = ?");
+                        $stmt->execute(array($username ,$email ,$fullname ,$pass ,$userid ));
+
+                        $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
+                        redirectPage($Msg,'back' , 5);
+                    // redirectPage($Msg,'member.php' , 5);
+                    }
+                    
                 
                 }
                 

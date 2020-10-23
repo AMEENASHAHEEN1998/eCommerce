@@ -15,9 +15,11 @@
             $stmt = $con->prepare("SELECT shops.comments.* , shops.items.Name AS 'Item Name' , shops.users.UserName AS 'Member Name'
             FROM shops.comments
             INNER JOIN shops.items on shops.items.ID = shops.comments.Item_Id
-            INNER JOIN shops.users on shops.users.UserId = shops.comments.User_Id");
+            INNER JOIN shops.users on shops.users.UserId = shops.comments.User_Id
+            ORDER BY shops.comments.ID DESC");
             $stmt->execute();
             $rows = $stmt->fetchAll();
+            if(!empty($rows)){
             ?>
             <h2 class=" text-center"  >Manage Comments</h2>
             <div class ='container'>
@@ -58,6 +60,11 @@
             </div>
             
             <?php
+            }else {
+                echo '<div class = "container">';
+                    echo '<div class="nice-message">There\'s No Sush Comment</div>';   
+                echo '</div>';
+            }
         
         }
         elseif($do == 'Edit'){

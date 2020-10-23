@@ -23,12 +23,12 @@
         <li class="nav-item">
           <a class="nav-link  " href="comment.php"><?php echo lang('Comments')?></a>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link  " href="#"><?php echo lang('Statistic')?></a>
         </li>
         <li class="nav-item">
           <a class="nav-link  " href="#"><?php echo lang('Logs')?></a>
-        </li>
+        </li>-->
       </ul>
       
       <ul class="nav navbar-nav navbar-right hoverNav " style="margin-left : 50%" >   

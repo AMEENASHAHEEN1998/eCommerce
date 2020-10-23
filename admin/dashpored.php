@@ -47,7 +47,7 @@
                         <i class="fa fa-comments"></i>
                         <div class="info">
                             Total Comments
-                            <span>100</span>
+                            <span><a href="comment.php"> <?php echo countItem('ID' ,'shops.comments') ?></a></span>
                         </div>
                     </div>
                 </div>
@@ -68,11 +68,15 @@
                         <div class="panel-body">
                             <ul class = "list-unstyled latest-users ">
                                 <?php $latestUsers = getLatest("*" ,"shops.users" ,"UserId" ,$latestNumber);
+                                if(! empty($latestUsers)){
                                     foreach($latestUsers as $user){
-                                    echo "<li>".$user["UserName"] ."<a href='member.php?do=Edit&userid=".$user["UserId"]."'class='btn btn-success pull-right '><i class='far fa-edit'></i>Edit</a>";
-                                    if($user['RegStatus'] == 0){
-                                        echo "<a href='member.php?do=Active&userid=". $user['UserId'] ." ' class='btn btn-info btnPadd active pull-right'><i class='fa fa-check'></i>Active</a>";
+                                        echo "<li>".$user["UserName"] ."<a href='member.php?do=Edit&userid=".$user["UserId"]."'class='btn btn-success pull-right '><i class='far fa-edit'></i>Edit</a>";
+                                        if($user['RegStatus'] == 0){
+                                            echo "<a href='member.php?do=Active&userid=". $user['UserId'] ." ' class='btn btn-info btnPadd active pull-right'><i class='fa fa-check'></i>Active</a>";
                                         }
+                                    }
+                                }else{
+                                    echo "There\'s No Member To Show";
                                 }
                                 ?>
                             </ul>
@@ -82,20 +86,24 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default panalBG">
                         <div class="panel-heading">
-                            <i class="fa fa-tag"></i> Latest Items
+                            <i class="fa fa-tag"></i> Latest <?php echo $latestNumber?> Items
                             <span class="toggle-info pull-right">
                                 <i class="fa fa-plus fa-lg"></i>
                             </span>
                         </div>
                         <div class="panel-body">
-                        <ul class = "list-unstyled latest-users ">
+                            <ul class = "list-unstyled latest-users ">
                                 <?php $latestItems = getLatest("*" ,"shops.items" ,"ID" ,$latestNumber);
-                                    foreach($latestItems as $item){
-                                    echo "<li>".$item["Name"] ."<a href='item.php?do=Edit&itemid=".$item["ID"]."'class='btn btn-success pull-right '><i class='far fa-edit'></i>Edit</a>";
-                                    if($item['Approve'] == 0){
-                                        echo "<a href='item.php?do=Approve&itemid=". $item['ID'] ." ' class='btn btn-info btnPadd active pull-right'><i class='fa fa-check'></i>Approve</a>";
+                                    if(! empty($latestItems)){
+                                        foreach($latestItems as $item){
+                                        echo "<li>".$item["Name"] ."<a href='item.php?do=Edit&itemid=".$item["ID"]."'class='btn btn-success pull-right '><i class='far fa-edit'></i>Edit</a>";
+                                        if($item['Approve'] == 0){
+                                            echo "<a href='item.php?do=Approve&itemid=". $item['ID'] ." ' class='btn btn-info btnPadd active pull-right'><i class='fa fa-check'></i>Approve</a>";
+                                            }
                                         }
-                                }
+                                    }else{
+                                        echo "There\'s No Item to show";
+                                    }
                                 ?>
                             </ul>
                         </div>
@@ -108,7 +116,7 @@
                     <div class="panel panel-default panalBG">
                         <div class="panel-heading">
                             
-                            <i class="fa fa-comments-o"></i> Latest Comments
+                            <i class="fa fa-comments-o"></i> Latest <?php echo $latestNumber?> Comments
                             <span class="toggle-info pull-right">
                                 <i class="fa fa-plus fa-lg"></i>
                             </span>
@@ -119,9 +127,11 @@
                                 FROM shops.comments
                                 
                                 INNER JOIN shops.users on shops.users.UserId = shops.comments.User_Id
-                                ");
+                                ORDER BY shops.comments.ID DESC
+                                LIMIT $latestNumber");
                                 $stmt->execute();
                                 $comments = $stmt->fetchAll();
+                                if(! empty($comments)){
                                 foreach($comments as $comment){
                                     echo "<div class='comment-box'>";
                                         echo "<span class='member_name' >". $comment['Member Name'] ."</span>";
@@ -135,6 +145,8 @@
                                         }
                                     echo"</div>";
 
+                                }}else{
+                                    echo "There\'s No Comment To Show";
                                 }
                             ?>
                         </div>
