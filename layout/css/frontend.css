@@ -1,0 +1,80 @@
+/* start main rule*/
+body{
+    background-color: #f4f4f4;
+    font-size: 16px;
+}
+label{
+    padding-top: 6px;
+}
+.form-control{
+    position: relative;
+}
+.nice-message{
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #eee;
+    border-left: 2px solid #080;
+}
+.asterisk{
+    font-size: 20px;
+    position: absolute;
+    top: 1px;
+    right: 7px;
+    color: #D20707;
+}
+/* end main rule*/
+/* start header*/
+
+/* end header*/
+.upper-bar{
+    padding: 10px;
+    background-color: #eee;
+}
+
+/* start category page*/
+
+.header2{
+    font-size: 55px;
+    margin :20px 0;
+    font-weight: bold;
+    color: #666;
+}
+
+.item-box{
+    position: relative;
+}
+.item-box .price-tag{
+    background-color: #848484 ;
+    padding: 2px 10px ;
+    position: relative;
+    top: 10px;
+    left: 0px ;
+    font-weight: bold;
+}
+
+/* end category page*/
+/* start login page*/
+
+.login-page form{
+    max-width: 380px;
+    margin: auto;
+}
+.login-page h2{
+    color: #c0c0c0;
+}
+.login-page h2 span{
+    cursor: pointer;
+}
+.login-page .signup{
+    display: none;
+}
+.login-page form input{
+    margin-bottom: 10px;
+}
+.input-container{
+    position: relative;
+}
+.login-page .selected{
+    color: #b22020;
+}
+/* end login page*/
