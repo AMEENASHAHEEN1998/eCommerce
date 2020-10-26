@@ -1,7 +1,11 @@
 <?php
+
+    // error reporting اظهار كل الاخطاء ادا موجودة
+    ini_set('display_errors' , 'on');
+    error_reporting(E_ALL);
+
     include "admin/connect.php"; // db connect file 
     
-
     // rout
     $tpl        = "inclued/templates/"; // template path
     $languages  = "inclued/languages/"; // language directory

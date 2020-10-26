@@ -17,10 +17,10 @@ function getCategory(){
 ** function to get Category  from database 
 */
 
-function getItem($CatId){
+function getItem($where ,$value){
     global $con ;
-    $getItems = $con->prepare("SELECT * FROM shops.items WHERE CatId = ? ORDER BY ID DESC ");
-    $getItems->execute(array($CatId));
+    $getItems = $con->prepare("SELECT * FROM shops.items WHERE $where = ? ORDER BY ID DESC ");
+    $getItems->execute(array($value));
     $items = $getItems->fetchAll();
     return $items;
 }

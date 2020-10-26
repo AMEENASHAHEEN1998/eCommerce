@@ -3,7 +3,7 @@
     <h2 class='text-center header2'><?php echo str_replace("-"," ",$_GET["pagename"]) ?></h2>
     <div class='row' >
     <?php 
-        foreach(getItem($_GET['pageid']) as $item){
+        foreach(getItem('shops.items.CatId',$_GET['pageid']) as $item){
             echo '<div class = "col-sm-6 col-md-3">';
                 echo'<div class= "thumbnail item-box"> ';
                     echo '<span class = "price-tag">'.$item["Price"].'</span>';

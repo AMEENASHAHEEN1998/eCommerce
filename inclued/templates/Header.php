@@ -24,10 +24,12 @@
             <div class='container'>
                 <?php
                 if(isset($_SESSION['user'])){
-                    echo 'Welcome ' . $_SESSION['user'];
-                    
+                    echo 'Welcome ' . $_SESSION['user'] .' ';
+                    echo '<a href="profile.php">My Profile </a>';
+                    echo ' - <a href="logout.php">Logout </a>';
+
                     if(checkUserStatus($_SESSION['user']) == 1){
-                        echo 'Your Membershipe need to Activate by Admin';
+                       // echo 'Your Membershipe need to Activate by Admin';
                     }
                 }else{
                 ?>

@@ -1,4 +1,5 @@
-<?php  // include init file
+<?php  
+    ob_start(); // output buffering start
     session_start();
     
     $pageTitle = 'LogIn|SignUp';
@@ -10,23 +11,56 @@
 
     //check if user come from http request
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $username = $_POST['username'];
-        $pass = $_POST['password'];
-        $hashedPass = sha1($pass);
-         
-        
-
-        // check if user exist in database
-        $stmt = $con->prepare("SELECT UserName ,Password FROM shops.users WHERE UserName = ? AND Password = ? ");
-        $stmt->execute(array($username,$hashedPass));  
-        $count = $stmt->rowCount();
-        
-        // if count > 0 this mean that connect to database correct
-        if($count > 0){
-            $_SESSION['user'] = $username; // register session name 
+        if(isset($_POST['login'])){
+            $username = $_POST['username'];
+            $pass = $_POST['password'];
+            $hashedPass = sha1($pass);
             
-            header('location:index.php'); // transfer to dashpored page
-            exit();
+            
+
+            // check if user exist in database
+            $stmt = $con->prepare("SELECT UserName ,Password FROM shops.users WHERE UserName = ? AND Password = ? ");
+            $stmt->execute(array($username,$hashedPass));  
+            $count = $stmt->rowCount();
+            
+            // if count > 0 this mean that connect to database correct
+            if($count > 0){
+                $_SESSION['user'] = $username; // register session name 
+                
+                header('location:index.php'); // transfer to dashpored page
+                exit();
+            }
+        }else {
+            $formErrors = array();
+            if(isset($_POST['username'])){
+
+                $filterUser = filter_var($_POST['username'],FILTER_SANITIZE_STRING);
+                if(strlen($filterUser) < 4){
+                    $formErrors[] = 'User Name Can not Be Less Than 4 Charackter';
+                }
+            }
+
+            if(isset($_POST['password']) && isset($_POST['password-again'])){
+                if(empty($_POST['password'])){
+                    $formErrors[] = 'Sorry Password Can Not Be Empty';
+                }
+
+                $pass = sha1($_POST['password']);
+                $pass_again = sha1($_POST['password-again']);
+
+                if($pass !== $pass_again){
+                    $formErrors[] = 'Sorry Password Not Match';
+                }
+            }
+
+            $formErrors = array();
+            if(isset($_POST['email'])){
+
+                $filterEmail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
+                if(filter_var($filterEmail ,FILTER_SANITIZE_EMAIL ) != true){
+                    $formErrors[] = 'This Email Is Not Valid';
+                }
+            }
         }
     }
     
@@ -44,21 +78,34 @@
         <div class='input-container'>
             <input class='form-control' type="password" name='password' autocomplete ='new-password' placeholder='Enter Your Password'required='required'>
         </div>
-        <input class='btn btn-primary btn-block' type="submit" value='LogIn'>
+        <input class='btn btn-primary btn-block' type="submit" name='login' value='LogIn'>
         
     </form>
     <!-- End login form -->
     <!-- Start signup form -->
-    <form class='signup' >
-        <input class='form-control' type="text" name='username' autocomplete ='OFF' placeholder='Enter Your User Name'>
-        <input class='form-control' type="email" name='email' autocomplete ='off' placeholder='Enter Vailed Email'>
-        <input class='form-control' type="password" name='password' autocomplete ='new-password' placeholder='Enter Complex Password'>
-        <input class='form-control' type="password" name='password-again' autocomplete ='new-password' placeholder='Enter Password Again'>
-        <input class='btn btn-success btn-block' type="submit" value='SignUp'>
+    <form class='signup' action="<?php echo $_SERVER['PHP_SELF'] ?>" method ="POST" >
+        <input class='form-control' type="text" name='username' autocomplete ='OFF' pattern = '.{4,}' title='User Name Must Be more than 4 chars' placeholder='Enter Your User Name' required>
+        <input class='form-control' type="email" name='email' autocomplete ='off' minlenght = '5' placeholder='Enter Vailed Email' required>
+        <input class='form-control' type="password" name='password' autocomplete ='new-password' minlenght = '5' placeholder='Enter Complex Password' required>
+        <input class='form-control' type="password" name='password-again' autocomplete ='new-password' placeholder='Enter Password Again' required>
+        <input class='btn btn-success btn-block'  type="submit" name ='signup' value='SignUp'>
 
     </form>
     <!-- end signup form -->
 
+    <div class = 'the-errors text-center'>
+        <?php 
+            if(!empty($formErrors)){
+                foreach($formErrors as $error){
+                    echo $error . '</br>';
+                }
+            }
+        ?>
+    </div>
 </div>
-<?php include $tpl . 'Footer.php';?>
+<?php 
+    include $tpl . 'Footer.php';
+    ob_end_flush();
+
+?>
 

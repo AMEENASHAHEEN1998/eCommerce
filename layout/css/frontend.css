@@ -77,6 +77,7 @@ label{
 .login-page .clog .selected{
     color: #337ab7;
 }
+
 .login-page [data-class='login'] .selected{
     color: #337ab7;
 }
@@ -86,4 +87,14 @@ label{
 .login-page [data-class='signup'] .selected{
     color: #5cb85c;
 }
+
 /* end login page*/
+
+/* start profile page*/
+.information{
+    margin-top :20px  ;
+}
+.block .information {
+
+}
+/* end profile page*/
