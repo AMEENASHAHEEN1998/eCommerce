@@ -22,16 +22,22 @@
     <body>
         <div class='upper-bar'>
             <div class='container'>
+                <?php
+                if(isset($_SESSION['User'])){
+                    echo 'Welcom' . $_SESSION['User'];
+                }else{
+                ?>
                 <a href="login.php">
-                    <span class="pull-right">LogIn/SignUp</span>
+                    <span class="pull-right">LogIn|SignUp</span>
                 </a>
+                <?php } ?>
             </div>
         </div>
         <nav  class="navbar navbar-inverse navbar-expand-sm bg-dark navbar-dark" >
             <div class="container" >
                 <div class="navbar-header" >
                 
-                <a class="navbar-brand" href="dashpored.php">Home Page</a>
+                <a class="navbar-brand" href="index.php">Home Page</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#app-nav">
                 <span class="navbar-toggler-icon"></span>
                 </button>
