@@ -33,7 +33,8 @@ $( document ).ready(function() {
 
     //-------------------------------------------
     $('.login-page h2 span').click(function(){
-        $(this).addClass('selected').siblings().removeClass('selected');
+        $(this).addClass('selected').siblings('span').removeClass('selected');
+
         $('.login-page form').hide();
         $('.' +$(this).data('class')).fadeIn(500);
     })

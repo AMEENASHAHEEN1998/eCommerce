@@ -17,7 +17,7 @@
         
 
         // check if user exist in database
-        $stmt = $con->prepare("SELECT  UserName ,Password FROM shops.users WHERE UserName = ? AND Password = ? ");
+        $stmt = $con->prepare("SELECT UserName ,Password FROM shops.users WHERE UserName = ? AND Password = ? ");
         $stmt->execute(array($username,$hashedPass));  
         $count = $stmt->rowCount();
         
@@ -33,10 +33,11 @@
 ?> 
 <div class='container login-page'>
     <h2 class='text-center header2'>
-        <span class='selected' data-class='login'>LogIn</span> | 
-        <span data-class='signup'>SignUp</span></h2>
+        <span class='selected clog' data-class='login'>LogIn </span> | 
+        <span data-class='signup' class='csig'> SignUp</span>
+    </h2>
     <!-- Start login form -->
-    <form class='login' action="">
+    <form class='login' action="<?php echo $_SERVER['PHP_SELF'] ?>" method ="POST">
         <div class='input-container'>
             <input class='form-control' type="text" name='username' autocomplete ='off' placeholder='Enter Your User Name' required='required'>
         </div>
@@ -48,7 +49,7 @@
     </form>
     <!-- End login form -->
     <!-- Start signup form -->
-    <form class='signup' action="<?php echo $_SERVER['PHP_SELF'] ?>" method ="POST">
+    <form class='signup' >
         <input class='form-control' type="text" name='username' autocomplete ='OFF' placeholder='Enter Your User Name'>
         <input class='form-control' type="email" name='email' autocomplete ='off' placeholder='Enter Vailed Email'>
         <input class='form-control' type="password" name='password' autocomplete ='new-password' placeholder='Enter Complex Password'>

@@ -47,7 +47,7 @@ label{
     background-color: #848484 ;
     padding: 2px 10px ;
     position: relative;
-    top: 10px;
+    top: 9px;
     left: 0px ;
     font-weight: bold;
 }
@@ -74,8 +74,14 @@ label{
 .input-container{
     position: relative;
 }
+.login-page .clog .selected{
+    color: #337ab7;
+}
 .login-page [data-class='login'] .selected{
     color: #337ab7;
+}
+.login-page .csig .selected{
+    color: #5cb85c;
 }
 .login-page [data-class='signup'] .selected{
     color: #5cb85c;

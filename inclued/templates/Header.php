@@ -23,8 +23,12 @@
         <div class='upper-bar'>
             <div class='container'>
                 <?php
-                if(isset($_SESSION['User'])){
-                    echo 'Welcom' . $_SESSION['User'];
+                if(isset($_SESSION['user'])){
+                    echo 'Welcome ' . $_SESSION['user'];
+                    
+                    if(checkUserStatus($_SESSION['user']) == 1){
+                        echo 'Your Membershipe need to Activate by Admin';
+                    }
                 }else{
                 ?>
                 <a href="login.php">

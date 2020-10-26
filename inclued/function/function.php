@@ -39,6 +39,18 @@ function getTitle(){
 }
 
 /*
+** checkUserStatus function v1.0 
+** function to chexk status  
+*/
+function checkUserStatus($user){
+    global $con;
+    $stmtStauts = $con->prepare("SELECT UserName ,RegStatus FROM shops.users WHERE UserName = ? AND RegStatus = 0");
+    $stmtStauts->execute(array($user));  
+    $satuts = $stmtStauts->rowCount();
+    return $satuts;
+}
+//------------------------------------------------------------------------------------
+/*
 ** Redirect function v2.0
 ** Redirect function [accept parameter]
 ** first [the message]
