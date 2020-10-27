@@ -19,14 +19,15 @@
             
 
             // check if user exist in database
-            $stmt = $con->prepare("SELECT UserName ,Password FROM shops.users WHERE UserName = ? AND Password = ? ");
-            $stmt->execute(array($username,$hashedPass));  
+            $stmt = $con->prepare("SELECT UserId , UserName ,Password FROM shops.users WHERE UserName = ? AND Password = ? ");
+            $stmt->execute(array($username,$hashedPass)); 
+            $get = $stmt->fetch(); 
             $count = $stmt->rowCount();
             
             // if count > 0 this mean that connect to database correct
             if($count > 0){
                 $_SESSION['user'] = $username; // register session name 
-                
+                $_SESSION['uid'] = $get['UserId'];// register userid in session
                 header('location:index.php'); // transfer to dashpored page
                 exit();
             }

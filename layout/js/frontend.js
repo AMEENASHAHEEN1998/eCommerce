@@ -38,8 +38,13 @@ $( document ).ready(function() {
         $('.login-page form').hide();
         $('.' +$(this).data('class')).fadeIn(500);
     })
-
-    $('.live-name').keyup(function(){
+// لما اكتب في الحقول يظهر في الجنب التاني عند الصورة
+    $('.live').keyup(function(){
+        $($(this).data('class')).text($(this).val());
+        
+        
+    });
+    /*$('.live-name').keyup(function(){
         $('.live-preview .caption h3').text($(this).val());
     });
     $('.live-desc').keyup(function(){
@@ -47,5 +52,5 @@ $( document ).ready(function() {
     });
     $('.live-price').keyup(function(){
         $('.live-preview .price-tag').text('$' + $(this).val());
-    });
+    });*/
 });
