@@ -11,7 +11,7 @@
 
 /* SelectBoxIt container */
 .selectboxit-container {
-  width: 100% ;
+  width: 25% ;
   position: relative;
   display: inline-block;
   vertical-align: top;
@@ -34,7 +34,7 @@
 
 /* Button */
 .selectboxit-container .selectboxit {
-  width: 100% ; /* Width of the dropdown button */
+  width: 25% ; /* Width of the dropdown button */
   cursor: pointer;
   margin: 0;
   padding: 0;
@@ -80,10 +80,12 @@
 
 /* Options List */
 .selectboxit-container .selectboxit-options {
+  width: 210px;
+  max-height: 240px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   box-sizing: content-box\9;
-  min-width: 100%;  /* Minimum Width of the dropdown list box options */
+  /*min-width: 100%;  /* Minimum Width of the dropdown list box options */
   margin: 0;
   padding: 0;
   list-style: none;

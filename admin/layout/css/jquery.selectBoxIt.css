@@ -11,7 +11,7 @@
 
 /* SelectBoxIt container */
 .selectboxit-container {
-  width: 100% ;
+  width: 200px ;
   position: relative;
   display: inline-block;
   vertical-align: top;
@@ -34,7 +34,7 @@
 
 /* Button */
 .selectboxit-container .selectboxit {
-  width: 100% ; /* Width of the dropdown button */
+  width: 200px ; /* Width of the dropdown button */
   cursor: pointer;
   margin: 0;
   padding: 0;
