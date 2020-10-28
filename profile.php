@@ -21,11 +21,11 @@
             <div class ='panel-body'>
             <ul class='list-unstyled'> 
                 
-                <li> <i class='fa fa-unlock-alt fa-fw'> </i> <span>Name : </span>  <?php echo $info['UserName'] ?></li> 
-                <li> <i class='fa fa-envelope-o fa-fw'> </i> <span>Email : </span>  <?php echo $info['Email'] ?> </li>
-                <li> <i class='fa fa-user fa-fw'></i> <span>Full Name : </span>  <?php echo $info['FullName'] ?> </li>
-                <li> <i class='fa fa-calendar fa-fw'></i> <span>Register Date : </span> <?php echo $info['Date'] ?> </li>
-                <li> <i class='fa fa-tags fa-fw'></i><span>Favourite Category : </span> <?php echo $info['Date'] ?></li>
+                <li> <i class='fa fa-unlock-alt fa-fw'> </i> <span>Name </span> : <?php echo $info['UserName'] ?></li> 
+                <li> <i class='fa fa-envelope-o fa-fw'> </i> <span>Email </span> : <?php echo $info['Email'] ?> </li>
+                <li> <i class='fa fa-user fa-fw'></i> <span>Full Name </span> : <?php echo $info['FullName'] ?> </li>
+                <li> <i class='fa fa-calendar fa-fw'></i> <span>Register Date </span> : <?php echo $info['Date'] ?> </li>
+                <li> <i class='fa fa-tags fa-fw'></i><span>Favourite Category </span>  : <?php echo $info['Date'] ?></li>
             </ul>
             </div>
         </div>
@@ -50,17 +50,19 @@
                                     echo '<span class = "price-tag">'.$item["Price"].'</span>';
                                     echo '<img class ="img-responsive"src= "layout/image/personal.png" alt =""/>';
                                     echo '<div class = "caption">';
-                                        echo '<h3> '.$item['Name'].' </h3>';
+                                        echo '<h3><a href="items.php?itemid='. $item['ID'] .'"> '.$item['Name'].'</a></h3>';
                                         echo '<p> '.$item['Description'].' </p>';
+                                        echo '<div class="date"> '.$item['AddDate'].' </div>';
+
 
                                     echo'</div>';
 
                                 echo'</div>';
 
                             echo'</div>';
-                        echo'</div>';
                             
                         }
+                        echo'</div>';
                     }else{
                         echo 'There is No Ads To Show Create <a href = "ads.php">New Ads</a>';
                     }

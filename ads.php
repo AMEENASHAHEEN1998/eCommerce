@@ -41,7 +41,7 @@
             if(empty($categories)){
                 $formErrors[] = 'Categories Can Not Be Empty';
             }
-            /*if(empty($formErrors)){
+            if(empty($formErrors)){
 
                     
                 // insert into db
@@ -60,7 +60,7 @@
                 if($stmt){
                     echo 'Item Added';
                 }
-            }*/
+            }
        
         }
         

@@ -57,7 +57,7 @@
                 <?php
                     foreach(getCategory() as $cat){
                         echo"<li >
-                            <a href='categories.php?pageid=" .$cat['ID'] ."&pagename=" . str_replace(" ","-",$cat["Name"])."'>" 
+                            <a href='categories.php?pageid=" .$cat['ID'] ."'>" 
                             . $cat['Name'].
                             "</a>
                         </li>";

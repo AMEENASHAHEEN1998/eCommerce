@@ -116,15 +116,40 @@ label{
     width: 130px;
 }
 
-.block .information {
-
+.thumbnail .date{
+    text-align: right;
+    color: #eee;
+    font-size: 13px;
+    font-weight: bold;
 }
 /* end profile page*/
 /* start ads page*/
 select option{
     max-width: 200px;
 }
-
-.live-name{
-
+/* end ads page*/
+/* start show item page*/
+.item-info h2{
+    padding: 10px;
+    margin: 0;
 }
+.item-info p{
+    padding: 10px;
+}
+.item-info ul li{
+    padding: 10px ;  
+}
+.item-info ul li:nth-child(odd){
+    background-color: #e8e8e8;
+}
+.item-info ul li span{
+    display: inline-block;
+    width: 130px;
+}
+
+/* end show item page*/
+/* start custom-hr */
+.custom-hr{
+    border: 1px solid #c9c9c9;
+}
+/* end custom-hr */
