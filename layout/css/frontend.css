@@ -146,7 +146,35 @@ select option{
     display: inline-block;
     width: 130px;
 }
-
+.add-comment h3{
+    margin: 0 0 10px;
+}
+.add-comment textarea{
+    margin-bottom: 10px;
+    display: block;
+    width: 500px;
+    height: 120px;
+}
+.comment-box{
+    margin-bottom: 20px;
+}
+.comment-box img{
+    margin-bottom: 10px;
+    max-width: 100px;   
+}
+.comment-box .lead{
+    background-color: #eee;
+    position: relative;
+    padding: 10px;
+}
+.comment-box .lead:before{
+    content: "";
+    width: 0;
+    height: 0;
+    border-width: 5px;
+    border-style: solid;
+    border-color: blue;
+}
 /* end show item page*/
 /* start custom-hr */
 .custom-hr{
