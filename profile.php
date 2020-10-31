@@ -26,6 +26,7 @@
                 <li> <i class='fa fa-user fa-fw'></i> <span>Full Name </span> : <?php echo $info['FullName'] ?> </li>
                 <li> <i class='fa fa-calendar fa-fw'></i> <span>Register Date </span> : <?php echo $info['Date'] ?> </li>
                 <li> <i class='fa fa-tags fa-fw'></i><span>Favourite Category </span>  : <?php echo $info['Date'] ?></li>
+                <a href='#' class='btn btn-default '>Edit Information</a>
             </ul>
             </div>
         </div>
@@ -54,7 +55,7 @@
                                     echo '<div class = "caption">';
                                         echo '<h3><a href="items.php?itemid='. $item['ID'] .'"> '.$item['Name'].'</a></h3>';
                                         echo '<p> '.$item['Description'].' </p>';
-                                        echo '<div class="datedate"> '.$item['AddDate'].'</div>';
+                                        echo '<div class=""> '.$item['AddDate'].'</div>';
 
 
                                     echo'</div>';

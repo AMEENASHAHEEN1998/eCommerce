@@ -56,7 +56,7 @@
                     
                 )); 
                 if($stmt){
-                    echo 'Item Added';
+                    $successMsg ='Item Has Been Added';
                 }
             }
        
@@ -132,9 +132,8 @@
                             <select  name="categories" class = "col-sm-10 col-md-9" >
                                 <option value="0" class = "col-sm-10 col-md-9">...</option>
                                 <?php 
-                                    $stmt2 = $con->prepare('SELECT * FROM shops.categores');
-                                    $stmt2->execute();
-                                    $categories = $stmt2->fetchAll();
+                                    
+                                    $categories = getAllFrom('categores' , 'ID');
                                     foreach($categories as $category){
                                         echo '<option class = "col-sm-10 col-md-9" value = " ' .$category['ID'] . '">" '.$category['Name'] .'" </option>';
                                     }
@@ -175,6 +174,9 @@
                         foreach($formErrors as $error){
                             echo '<div class="alert alert-danger">'.$error . '</div>';
                         }
+                    }
+                    if(isset($successMsg)){
+                        echo '<div class="alert alert-success">'.$successMsg.'</div>';
                     }
                 ?>
             </div>

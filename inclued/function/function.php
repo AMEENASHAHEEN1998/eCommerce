@@ -1,5 +1,24 @@
 <?php
-
+/*
+** get All function v1.0 
+** function to get All filed  from database 
+*/
+function getAllFrombig($field ,$table , $where =null , $and = null , $orderField , $ordering= 'DESC'){
+    global $con ;
+    
+    $getAll = $con->prepare("SELECT $field FROM $table $where $and   ORDER BY $orderField $ordering");
+    $getAll->execute();
+    $all = $getAll->fetchAll();
+    return $all;
+}
+function getAllFrom($tableName , $tableOrder , $where =null){
+    global $con ;
+    $sql = $where == null ? '':$where ;
+    $getAll = $con->prepare("SELECT * FROM shops.$tableName $sql ORDER BY $tableOrder DESC ");
+    $getAll->execute();
+    $all = $getAll->fetchAll();
+    return $all;
+}
 /*
 ** get category function v1.0 
 ** function to get Category  from database 

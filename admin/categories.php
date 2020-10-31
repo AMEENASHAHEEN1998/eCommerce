@@ -15,7 +15,7 @@
             if(isset($_GET['sort']) && in_array($_GET['sort'] , $sort_array)){
                 $sort = $_GET['sort'];
             }
-            $stmt = $con->prepare("SELECT * from shops.categores ORDER BY Ordering $sort");
+            $stmt = $con->prepare("SELECT * from shops.categores where Parent = 0 ORDER BY Ordering $sort");
             $stmt->execute();
             $rows = $stmt->fetchAll();
             if(!empty($rows)){
@@ -104,6 +104,23 @@
                         </div>
                     </div>
                 <!-- End Ordering filed-->
+                <!-- start type cat parent field-->
+                    <div class ='row form-group'>
+                        <label class='control-lable col-sm-2' >Parent?</label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <select name="parent" id="">
+                                <option value="0">None</option>
+                                <?php
+                                    $allcats= getAllFrombig('*' ,'shops.categores' , 'where Parent = 0' , '' , 'ID' , 'ASC');
+                                    foreach($allcats as $cat){
+                                        echo "<option value = '".$cat['ID']."'> ".$cat['Name']." </option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                <!-- start type cat parent field-->
+
                 <!-- Start Visiblility filed-->
                     <div class ='row form-group '>
                         <label class=' col-sm-2 control-lable' ><?php echo lang('Visible')?></label>
@@ -171,6 +188,7 @@
                 
                 $name           = $_POST['name'];
                 $description    = $_POST['description'];
+                $parent         = $_POST['parent'];
                 $ordering       = $_POST['ordering'];
                 $visiblility    = $_POST['visiblility'];
                 $Commenting     = $_POST['Commenting'];
@@ -210,11 +228,12 @@
                         redirectPage($Msg,'back' , 5);
                     }else{
                         // insert into db
-                        $stmt = $con->prepare("INSERT INTO shops.categores(Name ,Description , Ordering , Visibility,AllowComment,AllowAdverties)
-                        value (:zname,:zdesc,:zorder ,:zvisible ,:zallowComment ,:zallowAds )");
+                        $stmt = $con->prepare("INSERT INTO shops.categores(Name ,Description ,Parent, Ordering , Visibility,AllowComment,AllowAdverties)
+                        value (:zname,:zdesc,:zparent,:zorder ,:zvisible ,:zallowComment ,:zallowAds )");
                         $stmt->execute(array(
                             'zname'          => $name,
                             'zdesc'          => $description,
+                            'zparent'        => $parent,   
                             'zorder'         => $ordering,
                             'zvisible'       => $visiblility,
                             'zallowComment'  => $Commenting,

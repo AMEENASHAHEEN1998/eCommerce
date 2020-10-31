@@ -1,5 +1,12 @@
 <?php
-
+function getAllFrombig($field ,$table , $where =null , $and = null , $orderField , $ordering= 'DESC'){
+    global $con ;
+    
+    $getAll = $con->prepare("SELECT $field FROM $table $where $and   ORDER BY $orderField $ordering");
+    $getAll->execute();
+    $all = $getAll->fetchAll();
+    return $all;
+}
 // function to determain the page title
 
 function getTitle(){

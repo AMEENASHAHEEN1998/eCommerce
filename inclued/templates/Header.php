@@ -21,39 +21,59 @@
     </head>
     <body>
         <div class='upper-bar'>
-            <div class='container'>
-                <?php
+        <div class='container'>
+        
+            <?php
                 if(isset($_SESSION['user'])){?>
+                    <nav  class="navbar navbar-inverse navbar-expand-sm bg-light navbar-light navTop" >
+            
+                        <div class="navbar-header" >
                     
-                    <img class ="img-thumbnail img-circle img-bar"src= "layout/image/personal.png" alt =""/>
                     
-                    <div class = "btn-group my-info">
-                        <span class = "btn btn-default dropdown-toggle " data-toggle = "dropdown">
-                            <?php echo $_SESSION['user'];?>
-                            <!--<span class = "caret"></span>-->
-                        </span>
-                        <ul class='dropdown-menu'>
-                            <li><a href='profile.php'>My Profile</a></li>
-                            <li><a href='ads.php'>New Item </a></li>
-                            <li><a href='profile.php#my-Ad'>My Items</a></li>
-                            <li><a href='logout.php'>Logout </a></li>
+                            
+                            <img class ="img-thumbnail img-circle img-bar"src= "layout/image/personal.png" alt =""/>
+                                <div class=' navbar-nav hoverNav'>
+                                <div class = "btn-group my-info dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    
+                                        <span class = "btn btn-default  " >
+                                            <?php echo $_SESSION['user'];?>
+                                            <span class = "caret"></span>
+                                        </span>
+                                    
+                                    <ul class="dropdown-menu ">
+                                        <li><a href='profile.php'>My Profile</a></li>
+                                        <li><a href='ads.php'>New Item </a></li>
+                                        <li><a href='profile.php#my-Ad'>My Items</a></li>
+                                        <li><a href='logout.php'>Logout </a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                                </div>
+                                
+                        </div>
 
-                        </ul>
-                    </div>
-
+                        
+                        
+            
+            
+        
+    
          
                     
-                    <?php
+                        <?php
 
 
-                    
-                }else{
-                ?>
-                <a href="login.php">
-                    <span class="pull-right">LogIn|SignUp</span>
-                </a>
-                <?php } ?>
-            </div>
+                            
+                            }else{
+                        ?>
+                        <a href="login.php">
+                            <span class="pull-right">LogIn|SignUp</span>
+                        </a>
+                        <?php } ?>
+                        
+                    </nav>
+                </div>
         </div>
         <nav  class="navbar navbar-inverse navbar-expand-sm bg-dark navbar-dark" >
             <div class="container" >
@@ -69,7 +89,8 @@
             
             <ul class="nav navbar-nav navbar-right">
                 <?php
-                    foreach(getCategory() as $cat){
+                    $allcats = getAllFrombig('*' ,'shops.categores' , 'where Parent = 0' , '' , 'ID' , 'ASC');
+                    foreach($allcats as $cat){
                         echo"<li >
                             <a href='categories.php?pageid=" .$cat['ID'] ."'>" 
                             . $cat['Name'].
@@ -82,6 +103,6 @@
             
             
             </div>
-        </div>
-    </nav>
+        </nav>
+    
 

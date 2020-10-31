@@ -34,12 +34,35 @@ label{
 
 /* end header*/
 .upper-bar{
-    padding: 10px;
+    margin:0px;
+    padding: 0px;
     background-color: #eee;
+    border: none;
+}
+.upper-bar .navTop{
+    padding-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    padding-bottom: 0px;
+}
+.container nav .navbar-header{
+    position: relative;
+    width: 100%;
+}
+.hoverNav{
+    position: absolute;
+    left: 50px;
+    top: 0px;
 }
 .img-bar{
     width: 32px;
     height: 32px;
+    
 }
 
 /* start category page*/
@@ -136,6 +159,9 @@ label{
     color: #eee;
     font-size: 13px;
     font-weight: bold;
+}
+.information .btn{
+    margin-top: 10px;
 }
 
 /* end profile page*/
