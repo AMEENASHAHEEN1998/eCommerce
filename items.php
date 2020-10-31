@@ -10,7 +10,8 @@
                            FROM shops.items
                            INNER JOIN shops.categores on shops.categores.ID = shops.items.CatId
                            INNER JOIN shops.users on shops.users.UserId = shops.items.MemberId
-                           WHERE shops.items.ID = ?");
+                           WHERE shops.items.ID = ?
+                           AND Approve = 1");
     //ececute query
     $stmt->execute(array($itemid));
     // the row count 
@@ -68,7 +69,7 @@
             <div class='add-comment'>
                 <h3>Add Your Comments</h3>
                 <form action="<?php $_SERVER['PHP_SELF']?>" method="POST">
-                    <textarea name="comment" id="" ></textarea>
+                    <textarea name="comment" id="" required></textarea>
                     <input type="submit" class='btn btn-primary' value = 'Add Comment'>
                 </form>
                 <?php 
@@ -139,9 +140,11 @@
 
 
 <?php
- }else{
-     echo 'There Is No Sush Id ';
- }   
+}else{
+    echo '<div class= "container">';
+        echo '<div class =" alert alert-danger">There Is No Sush Id Or This Item Waiting Approve</div>';
+    echo '</div>';
+ }  
 
     
     include $tpl . 'Footer.php';

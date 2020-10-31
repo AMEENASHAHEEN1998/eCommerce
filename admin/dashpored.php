@@ -136,13 +136,14 @@
                                     echo "<div class='comment-box'>";
                                         echo "<span class='member_name' >". $comment['Member Name'] ."</span>";
                                         echo "<p class='member_comment' >". $comment['Comment'] ."</p>";
-                                    echo "</div>";
-                                    echo "<div class='btn-box'>
+                                    /*echo "<div class='btn-box'>
                                         <a href='comment.php?do=Edit&commentid=". $comment['ID'] ."  '  class='btn btn-success btnPadd'><i class='far fa-edit'></i> Edit</a>
                                         <a href='comment.php?do=Delete&commentid=". $comment['ID'] ." ' class='btn btn-danger confirm btnPadd'><i class='fa fa-close'></i> Delete</a>";
                                         if($comment['Status'] == 0){
                                             echo "<a href='comment.php?do=Approve&commentid=". $comment['ID'] ." ' class='btn btn-info btnPadd active'><i class='fa fa-check'></i> Approve</a>";
                                         }
+                                    echo "</div>";*/
+
                                     echo"</div>";
 
                                 }}else{

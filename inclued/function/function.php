@@ -17,9 +17,14 @@ function getCategory(){
 ** function to get Category  from database 
 */
 
-function getItem($where ,$value){
+function getItem($where ,$value , $approve = null){
     global $con ;
-    $getItems = $con->prepare("SELECT * FROM shops.items WHERE $where = ? ORDER BY ID DESC ");
+    if ($approve == null){
+        $sql = 'AND Approve = 1';
+    }else{
+        $sql= null;
+    }
+    $getItems = $con->prepare("SELECT * FROM shops.items WHERE $where = ? $sql ORDER BY ID DESC ");
     $getItems->execute(array($value));
     $items = $getItems->fetchAll();
     return $items;

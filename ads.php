@@ -11,9 +11,7 @@
        
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            echo $_SESSION['user'];
-            echo $_SESSION['uid'];
-            print_r($_SESSION);
+            
 
             $formErrors = array();
 
@@ -81,7 +79,7 @@
                         <div class ="row form-group form-group-lg">
                             <label class="text-center control-lable col-sm-3 " ><?php echo lang('Name')?></label>
                             <div class = "col-sm-10 col-md-9">
-                                <input type="text" name="name" class="form-control live" data-class='.live-name'  required = "required" placeholder = "Add New Item Name " >
+                                <input type="text" name="name" class="form-control live" data-class='.live-name' parent = '.{4,}' title='Title Name Can not Be Less Than 4 Charackter'  required = "required" placeholder = "Add New Item Name " >
                             </div>
                         </div>
                         <!-- End Name filed-->
@@ -89,7 +87,7 @@
                         <div class ="row form-group form-group-lg">
                             <label class="text-center control-lable col-sm-3 " >Description</label>
                             <div class = "col-sm-10 col-md-9">
-                                <input type="text" name="description" class="form-control live" data-class='.live-desc' required = "required" placeholder = "Enter Description Of Item " >
+                                <input type="text" name="description" class="form-control live" data-class='.live-desc' parent='.{20,}' title='Description Can not Be Less Than 20 Charackter' required = "required" placeholder = "Enter Description Of Item " >
                             </div>
                         </div>
                         <!-- End Description filed-->

@@ -23,16 +23,30 @@
         <div class='upper-bar'>
             <div class='container'>
                 <?php
-                if(isset($_SESSION['user'])){
-                    echo 'Welcome ' . $_SESSION['user'] .' ';
-                    echo '<a href="profile.php">My Profile </a>';
-                    echo ' - <a href="ads.php">New Ads </a>';
-                    echo ' - <a href="logout.php">Logout </a>';
+                if(isset($_SESSION['user'])){?>
+                    
+                    <img class ="img-thumbnail img-circle img-bar"src= "layout/image/personal.png" alt =""/>
+                    
+                    <div class = "btn-group my-info">
+                        <span class = "btn btn-default dropdown-toggle " data-toggle = "dropdown">
+                            <?php echo $_SESSION['user'];?>
+                            <!--<span class = "caret"></span>-->
+                        </span>
+                        <ul class='dropdown-menu'>
+                            <li><a href='profile.php'>My Profile</a></li>
+                            <li><a href='ads.php'>New Item </a></li>
+                            <li><a href='profile.php#my-Ad'>My Items</a></li>
+                            <li><a href='logout.php'>Logout </a></li>
+
+                        </ul>
+                    </div>
+
+         
+                    
+                    <?php
 
 
-                    if(checkUserStatus($_SESSION['user']) == 1){
-                       // echo 'Your Membershipe need to Activate by Admin';
-                    }
+                    
                 }else{
                 ?>
                 <a href="login.php">

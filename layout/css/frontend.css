@@ -37,6 +37,10 @@ label{
     padding: 10px;
     background-color: #eee;
 }
+.img-bar{
+    width: 32px;
+    height: 32px;
+}
 
 /* start category page*/
 
@@ -58,7 +62,18 @@ label{
     left: 0px ;
     font-weight: bold;
 }
-
+.item-box .approve-status{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color:#b85a5a ;
+    color: #fff ;
+    padding: 3px 5px;
+}
+.item-box .caption p{
+    height: 44px;
+    max-height: 44px;
+}
 /* end category page*/
 /* start login page*/
 
@@ -116,12 +131,13 @@ label{
     width: 130px;
 }
 
-.thumbnail .date{
+.datedate{
     text-align: right;
     color: #eee;
     font-size: 13px;
     font-weight: bold;
 }
+
 /* end profile page*/
 /* start ads page*/
 select option{
@@ -163,17 +179,21 @@ select option{
     max-width: 100px;   
 }
 .comment-box .lead{
-    background-color: #eee;
+    background-color:#e0e0e0;
     position: relative;
     padding: 10px;
+    margin-top: 25px;
 }
 .comment-box .lead:before{
     content: "";
     width: 0;
     height: 0;
-    border-width: 5px;
+    border-width: 15px;
     border-style: solid;
-    border-color: blue;
+    border-color: transparent #e0e0e0 transparent transparent;
+    position: absolute;
+    left: -28px;
+    top: 10px;
 }
 /* end show item page*/
 /* start custom-hr */
