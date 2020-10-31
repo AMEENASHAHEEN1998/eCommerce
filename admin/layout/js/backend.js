@@ -56,4 +56,11 @@ $( document ).ready(function() {
             $('.cat .full-view').fadeOut(200);
         }
     });
+
+    $('.child-link').hover(function(){
+        $(this).find('.show-delete').fadeIn(400);
+    },function(){
+        $(this).find('show-delete').fadeOut(400);
+
+    });
 });

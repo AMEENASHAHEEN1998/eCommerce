@@ -56,9 +56,24 @@
                                     if($row['Visibility'] == 1){echo "<span class='Visibility'><i class='fa fa-eye' ></i>  Hidden</span>";}
                                     if($row['AllowComment'] == 1){echo "<span class='AllowComment'><i class='fa fa-close' ></i> Comment Disable</span>";}
                                     if($row['AllowAdverties'] == 1){echo "<span class='AllowAdverties'><i class='fa fa-close' ></i> Adverties Disable</span>";}
-                                echo "</div>";   
+                                /* show child category */
+                                $childcats = getAllFrombig('*' ,'shops.categores' , "where Parent = {$row['ID']}" , '' , 'ID' , 'ASC');
+                                if(!empty($childcats)){
+                                    echo "<h4 class='child-head'> Child Category </h4>";
+                                    echo "<ul class='list-unstyled child-cats'>";
+                                    foreach($childcats as $child){
+                                        echo "<li class='child-link'>
+                                            <a href ='categories.php?do=Edit&catid=". $child['ID'] . "'>".$child['Name']."</a>
+                                            <a href='categories.php?do=Delete&catid=". $child['ID'] . " 'class='show-delete confirm'>Delete</a></li>";
+                                    }
+                                    echo "</ul>";
+                                }
+                                    echo "</div>";
+                                   
                                 echo "</div>";
+                            
                             echo '<hr>';
+
                         }
                         
                         ?>

@@ -28,9 +28,10 @@
             <h2 class=" text-center"  ><?php echo lang('ManageMembers')?></h2>
             <div class ='container'>
                 <div class = 'table-responsive'>
-                    <table class = 'main-table text-center table table-bordered'>
+                    <table class = 'main-table manage-members text-center table table-bordered'>
                         <tr>
                             <td>#ID</td>
+                            <td>Photo</td>
                             <td>User Name</td>
                             <td>Email</td>
                             <td>Full Name</td>
@@ -41,6 +42,14 @@
                             foreach($rows as $row){
                                 echo "<tr>";
                                     echo "<td>" . $row['UserId'] . "</td>";
+                                    echo "<td>";
+                                        if(empty($row['Photo'])){
+                                            echo '<img class ="img-responsive"src= "../layout/image/personal.png" alt =""/>';
+                                        }else{
+                                            echo "<img src='uploads/photo/" . $row['Photo'] . "'alt=''>";
+                                        }
+                                    
+                                    echo "</td>";
                                     echo "<td>" . $row['UserName'] . "</td>";
                                     echo "<td>" . $row['Email'] . "</td>";
                                     echo "<td>" . $row['FullName'] . "</td>";
@@ -74,7 +83,7 @@
 
             <h2 class=" text-center"  ><?php echo lang('AddMember')?></h2>
             <div class ='container'>
-                <form class='form-horizontal ' action = '?do=Insert' method = 'POST'>
+                <form class='form-horizontal ' action = '?do=Insert' method = 'POST' enctype = 'multipart/form-data'>
                 <!-- Start username filed-->
                     <div class ="row form-group form-group-lg">
                         <label class="control-lable col-sm-2 " ><?php echo lang('UserName')?></label>
@@ -111,6 +120,14 @@
                         </div>
                     </div>
                 <!-- End Full Name filed-->
+                <!-- Start photo filed-->
+                <div class ='row form-group '>
+                        <label class=' col-sm-2 control-lable' >User Photo</label>
+                        <div class = 'col-sm-10 col-md-5'>
+                            <input type="file" name='photo'  class='form-control' required = "required" >
+                        </div>
+                    </div>
+                <!-- End photo filed-->
                 <!-- Start save filed-->
                     <div class ='row form-group text-center'>
                         <div class = ' col-sm-10'>
@@ -130,6 +147,21 @@
             if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 echo "<h2 class='text-center'>Insert Member</h2> ";
                 echo "<div class = 'container' >" ;
+                // upload variable   انبعت الي صورة فيها متغيرات على شكل مصفوفة 
+                //$photo = $_FILES['photo'];
+
+                $photoName = $_FILES['photo']['name'];
+                $photoSize = $_FILES['photo']['size'];
+                $photoTmp = $_FILES['photo']['tmp_name'];
+                $photoType = $_FILES['photo']['type'];
+
+                // list of upload file extention allow
+                $photoAllowExtention = array("jpeg","jpg","png","gif");
+
+                // get photo extention
+                $photoExtention = strtolower(end(explode(".",$photoName)));
+                
+
                 // نفس الاسم الي في التاغ زي اتربيوت النيم
                 
                 $username = $_POST['username'];
@@ -159,6 +191,18 @@
                 if(empty($email)){
                     $formErrors[] = " User email is <strong>empty</strong> ";
                 }
+                if(! empty($photoName)&& ! in_array($photoExtention,$photoAllowExtention)){
+                    $formErrors[] = " Extention Photo Not <strong>Allowed</strong> ";
+                    
+                }
+                if( empty($photoName)){
+                    $formErrors[] = "  Photo Is <strong>Requered</strong> ";
+                    
+                }
+                if( $photoSize > 4194304){
+                    $formErrors[] = "  Photo Is Not Be Larger Than <strong>4MB</strong> ";
+                    
+                }
 
                 foreach($formErrors as $error){
                     echo "<div class = 'alert alert-danger'>" .$error."</div>" ;
@@ -167,19 +211,23 @@
                 // check if is there no error in update process
                 if(empty($formErrors)){
 
+                    $photo = rand(0 , 1000000) . '_' . $photoName;
+                    move_uploaded_file($photoTmp,'uploads\photo\\' . $photo);
+
                     $check = checkItem("UserName","shops.users",$username);
                     if($check == 1){
                         $Msg = "<div class = 'alert alert-danger'>Sorry this user name is exist</div>";
                         redirectPage($Msg,'back' , 5);
                     }else{
                         // insert into db
-                        $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email , FullName,RegStatus,Date)
-                        value (:zuser,:zpass,:zemail ,:zname ,1 , now())");
+                        $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email , FullName,RegStatus,Date , Photo)
+                        value (:zuser,:zpass,:zemail ,:zname ,1 , now() , :zphoto)");
                         $stmt->execute(array(
                             'zuser'     => $username,
                             'zpass'     => $hashPass,
                             'zemail'    => $email,
-                            'zname'     => $fullname
+                            'zname'     => $fullname,
+                            'zphoto'    => $photo
                         ));
                         $Msg = '<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Insered".'</div>';
                         redirectPage($Msg,'back' , 5);
@@ -248,6 +296,15 @@
                             </div>
                         </div>
                     <!-- End Full Name filed-->
+                    <!-- Start photo filed-->
+                        <div class ='row form-group '>
+                            <label class=' col-sm-2 control-lable' >User Photo</label>
+                            <div class = 'col-sm-10 col-md-5'>
+                                            
+                                <input type="file" name='photo' value = "<?php echo $row['Photo'] ;  ?>"  class='form-control' required = "required" >
+                            </div>
+                        </div>
+                    <!-- End photo filed-->
                     <!-- Start save filed-->
                         <div class ='row form-group text-center'>
                             <div class = ' col-sm-10'>
@@ -272,6 +329,9 @@
             echo "<div class = 'container' >" ;
         
             if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                
+                
                 // نفس الاسم الي في التاغ زي اتربيوت النيم
                 $username = $_POST['username'];
                 $userid = $_POST['userid'];
@@ -304,10 +364,11 @@
                 if(empty($email)){
                     $formErrors[] = "<div class = 'alert alert-danger'> User email is <strong>empty</strong> </div>";
                 }
-
+                
+                
                 foreach($formErrors as $error){
                     $Msg= $error ;
-                    redirectPage($Msg,'back' , 5);
+                    /*redirectPage($Msg,'back' , 5);*/
                 }
 
                 // check if is there no error in update process
@@ -327,7 +388,7 @@
 
                         $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
                         redirectPage($Msg,'back' , 5);
-                    // redirectPage($Msg,'member.php' , 5);
+                        redirectPage($Msg,'member.php' , 5);
                     }
                     
                 
