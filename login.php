@@ -67,7 +67,7 @@
     
 ?> 
 <div class='container login-page'>
-    <h2 class='text-center header2'>
+    <h2 class='text-center '>
         <span class='selected clog' data-class='login'>LogIn </span> | 
         <span data-class='signup' class='csig'> SignUp</span>
     </h2>

@@ -9,8 +9,6 @@
         $latestNumber = 5; 
 ?>
 
-         
-
         <div class = "container home-stats text-center">
             <h2>Dashbored</h2>
             <div class="row">

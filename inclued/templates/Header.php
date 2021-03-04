@@ -34,13 +34,14 @@
                             <img class ="img-thumbnail img-circle img-bar"src= "layout/image/personal.png" alt =""/>
                                 <div class=' navbar-nav hoverNav'>
                                 <div class = "btn-group my-info dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    
-                                        <span class = "btn btn-default  " >
+                                
+                                        <span class = "btn btn-default " >
                                             <?php echo $_SESSION['user'];?>
                                             <span class = "caret"></span>
                                         </span>
                                     
-                                    <ul class="dropdown-menu ">
+                                    
+                                    <ul class="dropdown-menu">
                                         <li><a href='profile.php'>My Profile</a></li>
                                         <li><a href='ads.php'>New Item </a></li>
                                         <li><a href='profile.php#my-Ad'>My Items</a></li>
@@ -52,14 +53,6 @@
                                 </div>
                                 
                         </div>
-
-                        
-                        
-            
-            
-        
-    
-         
                     
                         <?php
 

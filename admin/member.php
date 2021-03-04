@@ -281,6 +281,7 @@
                         </div>
                     <!-- End Password filed-->
                     <!-- Start email filed-->
+                        
                         <div class ='row form-group'>
                             <label class='control-lable col-sm-2' ><?php echo lang('Email')?></label>
                             <div class = 'col-sm-10 col-md-5'>
