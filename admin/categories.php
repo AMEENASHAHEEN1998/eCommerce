@@ -184,7 +184,7 @@
                 <!-- Start save filed-->
                     <div class ='row form-group text-center'>
                         <div class = 'col-sm-10'>
-                            <input type="submit" value='<?php echo lang('btnAddMember')?>' class='btn btn-primary '>
+                            <input type="submit" value='Add Category' class='btn btn-primary '>
                         </div>
                     </div>
                 <!-- End save filed-->

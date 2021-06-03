@@ -32,6 +32,12 @@
                 exit();
             }
         }else {
+            if(isset($_POST['signup'])){
+                $username = $_POST['username'];
+                $pass = $_POST['password'];
+                $hashedPass = sha1($pass);
+                $email = $_POST['email'];
+              
             $formErrors = array();
             if(isset($_POST['username'])){
 
@@ -54,12 +60,31 @@
                 }
             }
 
-            $formErrors = array();
+            
             if(isset($_POST['email'])){
 
                 $filterEmail = filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
                 if(filter_var($filterEmail ,FILTER_SANITIZE_EMAIL ) != true){
                     $formErrors[] = 'This Email Is Not Valid';
+                }
+            }
+
+            $stmt = $con->prepare("INSERT INTO shops.users(UserName ,Password , Email )
+                value (:zuser,:zpass,:zemail )");
+                $stmt->execute(array(
+                    'zuser'     => $username,
+                    'zpass'     => $hashedPass,
+                    'zemail'    => $email,
+                    
+                ));
+                $Msg = '<div class= "alert alert-success">'.$stmt->rowCount()  . "تم الاضافة".'</div>';
+                
+            // if count > 0 this mean that connect to database correct
+                if($stmt->rowCount() > 0){
+                    $_SESSION['user'] = $username; // register session name 
+                    $_SESSION['uid'] = $get['UserId'];// register userid in session
+                    header('location:index.php'); // transfer to dashpored page
+                    exit();
                 }
             }
         }

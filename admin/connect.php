@@ -1,5 +1,5 @@
 <?php
-
+// كلمة السر 123123
 $dsn    = "mysql:host=localhost;dbname = shops"; // data soures name ,host name ,database name
 $user   = 'root'; 
 $pass   ='';

@@ -79,7 +79,7 @@
 
             <h2 class=" text-center"  >Add New Item</h2>
             <div class ='container'>
-                <form class='form-horizontal ' action = '?do=Insert' method = 'POST'>
+                <form class='form-horizontal ' action = '?do=Insert' method = 'POST' enctype = 'multipart/form-data'>
                 <!-- Start Name filed-->
                     <div class ="row form-group form-group-lg">
                         <label class="control-lable col-sm-2 " ><?php echo lang('Name')?></label>
@@ -112,6 +112,13 @@
                         </div>
                     </div>
                 <!-- End Country filed-->
+                <div class ='row form-group '>
+                    <label class=' col-sm-2 control-lable' >Item Photo</label>
+                    <div class = 'col-sm-10 col-md-5'>
+                        <input type="file" name='photo'  class='form-control' required = "required" >
+                    </div>
+                </div>
+                <!-- End photo filed-->
                 <!-- Start Status filed-->
                 <div class ="row form-group form-group-lg">
                     <label class="control-lable col-sm-2 " >Status</label>
@@ -183,6 +190,17 @@
             if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 echo "<h2 class='text-center'>Insert Item</h2> ";
                 echo "<div class = 'container' >" ;
+                $photoName = $_FILES['photo']['name'];
+                $photoSize = $_FILES['photo']['size'];
+                $photoTmp = $_FILES['photo']['tmp_name'];
+                $photoType = $_FILES['photo']['type'];
+
+                // list of upload file extention allow
+                $photoAllowExtention = array("jpeg","jpg","png","gif");
+
+                // get photo extention
+                $photoExtention = strtolower(end(explode(".",$photoName)));
+
                 // نفس الاسم الي في التاغ زي اتربيوت النيم
                 
                 $name               = $_POST['name'];
@@ -234,11 +252,12 @@
 
                 // check if is there no error in update process
                 if(empty($formErrors)){
-
+                    $photo = rand(0 , 1000000) . '_' . $photoName;
+                    move_uploaded_file($photoTmp,'uploads\photo\\' . $photo);
                     
                     // insert into db
-                    $stmt = $con->prepare("INSERT INTO shops.items(Name ,Description , Price , CountryMade,Status ,AddDate,MemberId,CatId)
-                    value (:zName,:zDescription,:zPrice ,:zCountryMade ,:zStatus , now() , :zMemberId ,:zCatId)");
+                    $stmt = $con->prepare("INSERT INTO shops.items(Name ,Description , Price , CountryMade,Status ,AddDate,MemberId,CatId ,Photo)
+                    value (:zName,:zDescription,:zPrice ,:zCountryMade ,:zStatus , now() , :zMemberId ,:zCatId ,:zphoto)");
                     $stmt->execute(array(
                         'zName'             => $name,
                         'zDescription'      => $description,
@@ -246,7 +265,8 @@
                         'zCountryMade'      => $country,
                         'zStatus'           => $status,
                         'zMemberId'         => $member,
-                        'zCatId'            => $categories
+                        'zCatId'            => $categories,
+                        'zphoto'    => $photo
                         
                     ));
                     $Msg = '<div class= "alert alert-success">'. $stmt->rowCount() . "Recored Insered".'</div>';
@@ -279,7 +299,7 @@
 
                 <h2 class=" text-center"  >Edit Item</h2>
                 <div class ='container'>
-                <form class='form-horizontal ' action = '?do=Update' method = 'POST'>
+                <form class='form-horizontal ' action = '?do=Update' method = 'POST' >
                     <input type = 'hidden' value = '<?php echo $itemid ?>' name = 'itemid'>
 
                 <!-- Start Name filed-->
@@ -443,6 +463,8 @@
             echo "<div class = 'container' >" ;
         
             if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+
                 // نفس الاسم الي في التاغ زي اتربيوت النيم
                 $id                 = $_POST['itemid'];
                 $name               = $_POST['name'];
@@ -492,9 +514,10 @@
 
                 // check if is there no error in update process
                 if(empty($formErrors)){
+
                     //echo $username . $userid . $email . $fullname;
 
-                    $stmt = $con-> prepare("UPDATE shops.items SET Name = ? , Description = ? , Price = ? , CountryMade = ? ,Status= ? , MemberId= ? , CatId= ? WHERE ID = ?");
+                    $stmt = $con-> prepare("UPDATE shops.items SET Name = ? , Description = ? , Price = ? , CountryMade = ? ,Status= ? , MemberId= ? , CatId= ?  WHERE ID = ?");
                     $stmt->execute(array($name ,$description ,$price ,$country ,$status ,$member,$categories ,$id ));
 
                     $Msg='<div class= "alert alert-success">'. $stmt->rowCount() . "Recored updated".'</div>';
